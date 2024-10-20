@@ -1,0 +1,41 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 8vh;
+    background-color: #fff;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+}
+
+.scontainer {
+    margin: 2rem;
+    display: flex;
+    flex-direction: row;
+    background: transparent;
+    margin: 1.2rem;
+    gap: 29rem;
+}
+
+.logo-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+
+.logo-header img {
+    width: 65px;
+    height: 65px;
+}
+
+.logo-header input {
+    background-color: transparent;
+    height: 5px;
+    width: 35vw;
+    border: 1px solid #1C1C1C;
+    border-radius: 1.8rem;
+    font-size: 1.2rem;
+    padding: 1rem 0 .8rem 3rem;
+    margin: -2rem;
+}

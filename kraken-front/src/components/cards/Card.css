@@ -1,0 +1,39 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 70vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 77;
+}
+
+.card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+
+.card .flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    width: 10px;
+    height: 10px;
+    color: #fff;
+    background-color: #1C1C1C;
+    padding: 5px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+.card:hover {
+    cursor: pointer;
+}
+
+.userName {
+    font-size: 1.2rem;
+    background-color: transparent;
+    margin-left: 6px;
+}
