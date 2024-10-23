@@ -3,7 +3,7 @@ import './user.css'
 import { GoCheck, GoGear, GoHeart, GoSignOut } from 'react-icons/go';
 
 function User () {
-    const [userOpen, setUserOpen] = useState (true)
+    const [userOpen, setUserOpen] = useState (false)
     return (
         <>
             <div className="user">

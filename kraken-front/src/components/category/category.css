@@ -1,0 +1,178 @@
+.categoria {
+    display: grid;
+    margin: 2rem;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.home-appliance {
+    display: flex;
+    border: 1px solid #aaa;
+    width: 20vw;
+    height: 10vh;
+    padding: 1rem;
+    background-image: url("../../../public/category/Leonardo_Phoenix_Create_an_image_that_showcases_a_harmonious_a_0.jpg");
+    background-size: cover;
+    border-radius: .2rem;
+    filter: opacity(80%);
+}
+
+.food{
+    display: flex;
+    border: 1px solid #aaa;
+    width: 20vw;
+    height: 10vh;
+    padding: 1rem;
+    background-image: url("../../../public/category/Leonardo_Phoenix_Create_a_vibrant_and_mouthwatering_image_that_2.jpg");
+    background-size: cover;
+    border-radius: .2rem;
+    filter: opacity(80%);
+}
+
+.carpenter {
+    display: flex;
+    border: 1px solid #aaa;
+    width: 20vw;
+    height: 10vh;
+    padding: 1rem;
+    background-image: url("../../../public/category/Leonardo_Phoenix_A_warmly_lit_inviting_scene_depicting_a_skill_3.jpg");
+    background-size: cover;
+    border-radius: .2rem;
+    filter: opacity(80%);
+}
+
+.cleaning {
+    display: flex;
+    border: 1px solid #aaa;
+    width: 20vw;
+    height: 10vh;
+    padding: 1rem;
+    background-image: url("../../../public/category/Leonardo_Phoenix_Illustrate_a_vibrant_and_organized_scene_show_0.jpg");
+    background-size: cover;
+    border-radius: .2rem;
+    filter: opacity(80%);
+}
+
+.text-categoria {
+    background-color: transparent;
+    filter: brightness(80%);
+}
+
+.carpenter .text-categoria h3, .carpenter .text-categoria p {
+    background-color: transparent;
+    color: #FFDAB9;
+    
+}
+
+.carpenter .text-categoria .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: 22px;
+    border-radius: .8rem;
+    color: #FFDAB9;
+    background-color: #8B4513;
+}
+
+
+.cleaning .text-categoria h3,.cleaning .text-categoria p {
+    background-color: transparent;
+    color: #1C1C1C;
+}
+
+.cleaning .text-categoria .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: 22px;
+    border-radius: .8rem;
+    color: #808080;
+    background-color: #363636;
+}
+
+
+.home-appliance .text-categoria h3,.home-appliance .text-categoria p {
+    background-color: transparent;
+    color: #DC143C;
+}
+
+.home-appliance .text-categoria .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: 22px;
+    border-radius: .8rem;
+    color: #FF7F50;
+    background-color: #800000;
+}
+
+.food .text-categoria h3,.food .text-categoria p {
+    background-color: transparent;
+    color: #00FFFF;
+}
+
+.text-categoria h3 {
+    font-size: 1.8rem;
+    margin-bottom: .4rem;
+}
+
+.text-categoria p {
+    font-size: 1.2rem;
+    margin-bottom: .8rem;
+}
+
+.food .text-categoria .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: 22px;
+    border-radius: .8rem;
+    color: #00FF00;
+    background-color: #006400;
+}
+
+.text-categoria .btn:hover {
+    cursor: pointer;
+    transform: scale(1.2, 1.2);
+}
+
+.container-slick {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+  }
+  
+  .slick {
+      margin: 50px 100px;
+      position: relative;
+    }
+  
+    .slick .box {
+      border-radius: 0;
+      text-align: center;
+    }
+  
+    .slick p {
+      text-transform: capitalize;
+      font-size: 14px;
+      font-weight: 600;
+    }
+  
+    .slick img {
+      margin: auto;
+      width: 100px;
+      height: 100px;
+    }
+  
+    .slick .box {
+      margin: 5px;
+      cursor: pointer;
+      background-color: #fff;
+      border: 1px solid #dcdcdc;
+    }
+  
+    .slick .box p {
+      background-color: #fff;
+    }
