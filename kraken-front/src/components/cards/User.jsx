@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import './user.css'
-import { GoCheck, GoGear, GoHeart, GoSignOut } from 'react-icons/go';
+import { GoCheck, GoGear, GoHeart, GoLog, GoPackageDependents, GoSignOut } from 'react-icons/go';
 
 function User () {
     const [userOpen, setUserOpen] = useState (false)
+    const [perfilOpen, setPerfilOpen] = useState ('')
     return (
         <>
             <div className="user">
@@ -12,22 +13,52 @@ function User () {
                 <>
                     <div className='userPerfil'>
                         <h2>MyAccount</h2>
-                        <div className='userContent'>
+                        <div className='userContent' onClick={()=>setPerfilOpen('gear')}>
                             <GoGear />
                             <h4>Setting</h4>
                         </div>
-                        <div className='userContent'>
+                        <div className='userContent' onClick={()=>setPerfilOpen('check')}>
                             <GoCheck />
                             <h4>Checking</h4>
                         </div>
-                        <div className='userContent'>
+                        <div className='userContent' onClick={()=>setPerfilOpen('heart')}>
                             <GoHeart />
                             <h4>Wishlist</h4>
+                        </div>
+                        <div className='userContent' onClick={()=>setPerfilOpen('heart')}>
+                            <GoPackageDependents />
+                            <h4>Cadastrar</h4>
+                        </div>
+                        <div className='userContent' onClick={()=>setPerfilOpen('heart')}>
+                            <GoLog />
+                            <h4>Historico</h4>
                         </div>
                         <div className='userContent'>
                             <GoSignOut />
                             <h4>Lougout</h4>
                         </div>
+                    </div>             
+                    <div>
+                        {perfilOpen === 'gear' &&
+                        <div className="container-gear">
+                            <div className='content-gear'>
+                                <form action='' method=''>
+                                    
+                                </form>
+                            </div>
+                        </div>}
+                        {perfilOpen === 'heart' &&
+                        <div className="container-heart">
+                            <div className='content-heart'>
+                                
+                            </div>
+                        </div>}
+                        {perfilOpen === 'check' &&
+                        <div className="container-check">
+                            <div className='content-check'>
+                                
+                            </div>
+                        </div>}
                     </div>
                 </>
                 )

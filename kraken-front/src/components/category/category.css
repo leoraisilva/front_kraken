@@ -1,3 +1,11 @@
+.container-categoria{
+    margin: 2rem;
+}
+
+.container-categoria h1{
+    font-size: 4rem;
+}
+
 .categoria {
     display: grid;
     margin: 2rem;
@@ -8,7 +16,7 @@
     display: flex;
     border: 1px solid #aaa;
     width: 20vw;
-    height: 10vh;
+    height: 12vh;
     padding: 1rem;
     background-image: url("../../../public/category/Leonardo_Phoenix_Create_an_image_that_showcases_a_harmonious_a_0.jpg");
     background-size: cover;
@@ -20,7 +28,7 @@
     display: flex;
     border: 1px solid #aaa;
     width: 20vw;
-    height: 10vh;
+    height: 12vh;
     padding: 1rem;
     background-image: url("../../../public/category/Leonardo_Phoenix_Create_a_vibrant_and_mouthwatering_image_that_2.jpg");
     background-size: cover;
@@ -32,7 +40,7 @@
     display: flex;
     border: 1px solid #aaa;
     width: 20vw;
-    height: 10vh;
+    height: 12vh;
     padding: 1rem;
     background-image: url("../../../public/category/Leonardo_Phoenix_A_warmly_lit_inviting_scene_depicting_a_skill_3.jpg");
     background-size: cover;
@@ -44,7 +52,7 @@
     display: flex;
     border: 1px solid #aaa;
     width: 20vw;
-    height: 10vh;
+    height: 12vh;
     padding: 1rem;
     background-image: url("../../../public/category/Leonardo_Phoenix_Illustrate_a_vibrant_and_organized_scene_show_0.jpg");
     background-size: cover;
@@ -57,10 +65,10 @@
     filter: brightness(80%);
 }
 
-.carpenter .text-categoria h3, .carpenter .text-categoria p {
+.text-categoria h3, .text-categoria p {
     background-color: transparent;
-    color: #FFDAB9;
-    
+    color: #d3d3d3;
+    text-shadow: rgba(0, 0, 0, 5)  2px 2px 2px ;
 }
 
 .carpenter .text-categoria .btn {
@@ -75,11 +83,6 @@
 }
 
 
-.cleaning .text-categoria h3,.cleaning .text-categoria p {
-    background-color: transparent;
-    color: #1C1C1C;
-}
-
 .cleaning .text-categoria .btn {
     display: flex;
     justify-content: center;
@@ -92,11 +95,6 @@
 }
 
 
-.home-appliance .text-categoria h3,.home-appliance .text-categoria p {
-    background-color: transparent;
-    color: #DC143C;
-}
-
 .home-appliance .text-categoria .btn {
     display: flex;
     justify-content: center;
@@ -106,11 +104,6 @@
     border-radius: .8rem;
     color: #FF7F50;
     background-color: #800000;
-}
-
-.food .text-categoria h3,.food .text-categoria p {
-    background-color: transparent;
-    color: #00FFFF;
 }
 
 .text-categoria h3 {
@@ -175,4 +168,13 @@
   
     .slick .box p {
       background-color: #fff;
+    }
+
+    @media (max-height: 700px) {
+        .container-categoria{
+            margin: 1rem;
+        }
+        .food, .carpenter, .cleaning, .home-appliance {
+            height: 20vh;
+        }
     }

@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    height: 8vh;
+    height: 10vh;
     background-color: #fff;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
 }
@@ -14,7 +14,7 @@
     flex-direction: row;
     background: transparent;
     margin: 1.2rem;
-    gap: 29rem;
+    gap: 22vw;
 }
 
 .logo-header{
@@ -38,4 +38,16 @@
     font-size: 1.2rem;
     padding: 1rem 0 .8rem 3rem;
     margin: -2rem;
+}
+
+@media (max-width: 1330px) {
+    .scontainer {
+        gap: 15vw;
+    }
+}
+
+@media (max-height: 640px) {
+    .header {
+        height: 15vh;
+    }
 }

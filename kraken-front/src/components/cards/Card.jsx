@@ -12,7 +12,10 @@ function Card () {
                 <BiShoppingBag size={25} />
                 <span className="flexCenter">2</span>
             </div>
-            <div className={cardOpen ? "overlay" : "nonoverlay"}></div>
+            <div className={cardOpen ? "overlay" : "nonoverlay"} onClick={() => setCardOpen(null)}></div>
+            <div className={cardOpen ? "cartItem" : "cardhide"}>
+            </div>
+
         </>
     )
 }

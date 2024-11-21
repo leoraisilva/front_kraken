@@ -8,6 +8,21 @@
     z-index: 77;
 }
 
+.cartItem {
+    position: fixed;
+    margin-left: 68%;
+    width: 70vw;
+    height: 100vh;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 8%);
+    z-index: 88;
+  } 
+
+.cardhide {
+    display: none;
+  }
+
 .card {
     display: flex;
     justify-content: center;
@@ -37,3 +52,4 @@
     background-color: transparent;
     margin-left: 6px;
 }
+

@@ -23,7 +23,7 @@
 .userPerfil {
     color: #000;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.5);
-    margin:  0 0 -12.8rem -20rem;
+    margin:  0 0 -16.8rem -20rem;
     width: 150px;
     padding: 1.2rem;
     border-radius: .8rem;
@@ -42,4 +42,53 @@
     gap: 1rem;
     font-size: 1.2rem;
     background-color: transparent;
+}
+
+.userContent:hover {
+    cursor: pointer;
+}
+
+.container-gear {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 100;
+}
+
+.content-gear {
+    display: flex;
+    margin: 5rem;
+    border: 1px solid #aaa;
+    width: 92vw;
+    height: 85vh;
+    
+}
+
+.container-heart {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 100;
+}
+
+.content-heart {
+    display: flex;
+    margin: 5rem;
+    border: 1px solid #aaa;
+    width: 92vw;
+    height: 85vh;
+    
+}
+
+.container-check {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 100;
+}
+
+.content-check {
+    display: flex;
+    margin: 20rem 36rem;
+    border: 1px solid #aaa;
+    width: 40vw;
+    height: 40vh;
+    
 }
