@@ -1,9 +1,10 @@
 .container-categoria{
-    margin: 2rem;
+    margin: 5.5rem 2rem 2rem 2rem;
 }
 
 .container-categoria h1{
     font-size: 4rem;
+    font-weight: 400;
 }
 
 .categoria {
@@ -172,7 +173,7 @@
 
     @media (max-height: 700px) {
         .container-categoria{
-            margin: 1rem;
+            margin: 5.5rem 1rem 1rem 1rem
         }
         .food, .carpenter, .cleaning, .home-appliance {
             height: 20vh;

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './user.css'
-import { GoCheck, GoGear, GoHeart, GoLog, GoPackageDependents, GoSignOut } from 'react-icons/go';
+import { GoArchive, GoCheck, GoGear, GoHeart, GoLog, GoPackageDependents, GoSignOut } from 'react-icons/go';
+import { Link } from 'react-router-dom';
 
 function User () {
     const [userOpen, setUserOpen] = useState (false)
@@ -13,53 +14,35 @@ function User () {
                 <>
                     <div className='userPerfil'>
                         <h2>MyAccount</h2>
-                        <div className='userContent' onClick={()=>setPerfilOpen('gear')}>
+                        <Link to='/categoria' className='userContent'>
+                            <GoArchive />
+                            <h4>Category</h4>
+                        </Link>
+                        <Link to='/cadastro' className='userContent'>
                             <GoGear />
                             <h4>Setting</h4>
-                        </div>
-                        <div className='userContent' onClick={()=>setPerfilOpen('check')}>
+                        </Link>
+                        <Link to='/cadastro' className='userContent'>
                             <GoCheck />
                             <h4>Checking</h4>
-                        </div>
-                        <div className='userContent' onClick={()=>setPerfilOpen('heart')}>
+                        </Link>
+                        <Link to='/cadastro' className='userContent'>
                             <GoHeart />
                             <h4>Wishlist</h4>
-                        </div>
-                        <div className='userContent' onClick={()=>setPerfilOpen('heart')}>
+                        </Link>
+                        <Link to='/cadastro' className='userContent'>
                             <GoPackageDependents />
                             <h4>Cadastrar</h4>
-                        </div>
-                        <div className='userContent' onClick={()=>setPerfilOpen('heart')}>
+                        </Link>
+                        <Link to='/cadastro' className='userContent'>
                             <GoLog />
                             <h4>Historico</h4>
-                        </div>
-                        <div className='userContent'>
+                        </Link>
+                        <Link to='/cadastro' className='userContent'>
                             <GoSignOut />
                             <h4>Lougout</h4>
-                        </div>
+                        </Link>
                     </div>             
-                    <div>
-                        {perfilOpen === 'gear' &&
-                        <div className="container-gear">
-                            <div className='content-gear'>
-                                <form action='' method=''>
-                                    
-                                </form>
-                            </div>
-                        </div>}
-                        {perfilOpen === 'heart' &&
-                        <div className="container-heart">
-                            <div className='content-heart'>
-                                
-                            </div>
-                        </div>}
-                        {perfilOpen === 'check' &&
-                        <div className="container-check">
-                            <div className='content-check'>
-                                
-                            </div>
-                        </div>}
-                    </div>
                 </>
                 )
             }

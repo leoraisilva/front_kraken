@@ -1,9 +1,11 @@
 import './category.css'
 import React, { Component, useState } from "react";
 import { Carpenter, Cleaning, Food, HomeAppliance } from "../../assets/Data"
+import Product from '../product/Product';
 
 function Category() {
-    const [data, setData] = useState (Carpenter)
+    const [data, setData] = useState (HomeAppliance)
+    const [categoria, setCategoria] = useState('')
     return (
         <>
         <div className='container-categoria'>
@@ -41,8 +43,8 @@ function Category() {
                 <section className="slick">
                     <div className="container-slick">
                         {data.map((item) =>(
-                            <div className="boxs-slick" key={item.id}>
-                                <div className="box boxItem">
+                            <div className="boxs-slick" key={item.id} onClick={() => setCategoria(item.title)}>
+                                <div className="box boxItem" >
                                     <img src={item.image} />
                                     <p>{item.title}</p>
                                 </div>
@@ -52,6 +54,7 @@ function Category() {
                     </div>
                 </section>
             </div>
+            <Product valor={categoria} />
         </>
     )
 }

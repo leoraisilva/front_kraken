@@ -1,0 +1,84 @@
+.setting-container {
+    margin: 5.5rem 2rem 2rem 2rem;
+}
+
+.setting-container h1 {
+    font-size: 4rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+}
+
+.setup-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    background: #F0FFF0;
+    padding: 1rem;
+    border: 1px solid #d9d9d9;
+    border-radius: .8rem;
+    width: 600px;
+}
+
+.setup-content {
+    background: transparent;
+    width: 90%;
+}
+
+.setup-content h2 {
+    background: transparent;
+    margin: .5rem;
+    font-weight: 300;
+    font-size: 1.8rem;
+}
+
+.setup-content input {
+    background: #fff;
+    border: none;
+    height: 15px;
+    border-radius: .8rem;
+    margin: .8rem 1.4rem 1.4rem 1.4rem;
+    font-size: 1.4rem;
+    padding: 10px;
+    width: 100%;
+}
+
+.address-setup {
+    display: flex;
+    flex-direction: column;
+    width: 112%;
+    background: transparent;
+}
+
+.address-setup h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    background: transparent;
+}
+
+.address-components {
+    background: transparent;
+    display: flex;
+    flex-direction: row;
+}
+
+.setting-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin:  1rem 1rem 1rem 40%;
+    height: 35px;
+    padding: 1rem;
+    border: none;
+    font-size: 1.2rem;
+    background-color: #426B1F;
+    border-radius: .4rem;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.5);
+    color: #fff;
+}
+
+.setting-btn:hover {
+    cursor: pointer;
+}
