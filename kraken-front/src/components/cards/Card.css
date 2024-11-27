@@ -27,7 +27,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: transparent;
+    background-color: #fff;
 }
 
 .card .flexCenter {
@@ -49,7 +49,7 @@
 
 .userName {
     font-size: 1.2rem;
-    background-color: transparent;
+    background-color: #fff;
     margin-left: 6px;
 }
 

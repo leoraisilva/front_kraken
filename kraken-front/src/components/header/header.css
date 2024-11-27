@@ -14,7 +14,7 @@
     margin: 2rem;
     display: flex;
     flex-direction: row;
-    background: transparent;
+    background: #fff;
     margin: 1.2rem;
     gap: 22vw;
 }
@@ -23,16 +23,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: transparent;
+    background-color: #fff;
 }
 
 .logo-header img {
+    background-color: #fff;
     width: 65px;
     height: 65px;
 }
 
+.logo-header h2 {
+    background-color: #fff;
+}
+
 .logo-header input {
-    background-color: transparent;
+    background-color: #fff;
     height: 5px;
     width: 35vw;
     border: 1px solid #1C1C1C;

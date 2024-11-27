@@ -1,4 +1,4 @@
-.user {
+.user-perfil {
     display: flex;
     position: relative;
     flex-direction: column;
@@ -6,21 +6,21 @@
     justify-content: center;
     align-items: center;
     object-fit: cover;
-    background-color: transparent;
+    background-color: #fff;
 }
 
-.user img {
+.user-perfil img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
 }
 
-.user:hover img {
+.user-perfil:hover img {
     cursor: pointer;
     transform: scale(1.5, 1.5);
 }   
 
-.userPerfil {
+ .userPerfil {
     color: #000;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.5);
     margin:  0 0 -19.8rem -20rem;
@@ -32,7 +32,11 @@
 }
 
 .userPerfil h2 {
-    background-color: transparent;
+    background-color: #fff;
+}
+
+.userPerfil h4 {
+    background-color: #fff;
 }
 
 .userContent {
@@ -42,7 +46,7 @@
     gap: 1rem;
     font-size: 1.2rem;
     color: #000;
-    background-color: transparent;
+    background-color: #fff;
     text-decoration: none;
 }
 
@@ -62,6 +66,7 @@
     border: 1px solid #aaa;
     width: 92vw;
     height: 85vh;
+    background-color: #fff;
     
 }
 
@@ -77,6 +82,7 @@
     border: 1px solid #aaa;
     width: 92vw;
     height: 85vh;
+    background-color: #fff;
     
 }
 
@@ -92,5 +98,10 @@
     border: 1px solid #aaa;
     width: 40vw;
     height: 40vh;
+    background-color: #fff;
     
+}
+
+GoSignOut {
+    background-color: #fff;
 }
