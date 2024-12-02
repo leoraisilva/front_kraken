@@ -1,15 +1,41 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './cadastrar.css'
+import { Link, useNavigate } from 'react-router-dom';
 
 function Cadastrar () {
 
     const [usuario, setUsuario] = useState('');
+    const navigate = useNavigate();
     const [nome, setNome] = useState('');
     const [senha, setSenha] = useState('');
     const [email, setEmail] = useState('');
     const [tell, setTell] = useState('');
     const [cep, setCep] = useState('');
+    const [address, setAddress] = useState({})
     const [error, setError] = useState(null);
+
+
+    const handleCepBlur = () => {
+        if (cep.length === 8) {
+            fetch(`https://viacep.com.br/ws/${cep}/json/`, {
+                method: 'GET',
+                mode: 'cors'
+            })
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Falha ao buscar dados do CEP');
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    setAddress(data); 
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar dados de endereço:', error);
+                    setError('Erro ao carregar dados, tente novamente.');
+                });
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -51,13 +77,14 @@ function Cadastrar () {
         }catch (error) {
             setError('Error 403: Problema ao cadastrar. Tente novamente mais tarde.')
         }
+        navigate('/')
     }
 
 
     return (
         <>
             <div className='setting-container'>
-                <h1>Setting:</h1>
+                <h1>Cadastrar:</h1>
                 <div className='setup-container'>
                     <form onSubmit={handleSubmit} >
                         <div className='setup-content'> 
@@ -72,29 +99,29 @@ function Cadastrar () {
                                 <h3>Endereço:</h3>
                                 <div className='address-components'>
                                     <h2>Cep:</h2>
-                                    <input type='text' id='cep' value={cep} onChange={(e) => setCep(e.target.value)} />
+                                    <input type='text' id='cep' value={cep} onChange={(e) => setCep(e.target.value)} onBlur={handleCepBlur} />
                                 </div>
                                 <div className='address-components'>
                                     <h2>Pais:</h2>
-                                    <input type='text' />
+                                    <input type='text' value={cep!='' && 'Brasil' || ''}  />
                                 </div>
                                 <div className='address-components'>
                                     <h2>Cidade:</h2>
-                                    <input type='text'  />
+                                    <input type='text' value={address.localidade || ''}  />
                                 </div>
                                 <div className='address-components'>
                                     <h2>Estado:</h2>
-                                    <input type='text' />
+                                    <input type='text' value={address.estado || ''}  />
                                     <h2>UF:</h2>
-                                    <input type='text'  />
+                                    <input type='text' value={address.uf || ''}  />
                                 </div>
                                 <div className='address-components'>
                                     <h2>Rua:</h2>
-                                    <input type='text' />
+                                    <input type='text' value={address.logradouro || ''}   />
                                 </div>
                                 <div className='address-components'>
                                     <h2>Bairro:</h2>
-                                    <input type='text'/>
+                                    <input type='text' value={address.bairro || ''}  />
                                 </div>
                                 <div className='address-components'>
                                     <h2>Número:</h2>
@@ -106,7 +133,10 @@ function Cadastrar () {
                             <input type='text' id='email' value={email} onChange={(e) => setEmail(e.target.value)}/>
                             <h2>Tell:</h2>
                             <input type='text' id='tell' value={tell} onChange={(e) => setTell(e.target.value)} />
-                            <button type='submit' className='setting-btn' >Confirmar</button>
+                            <div className='bnt-setting' >
+                                <button type='submit' className='setting-btn' >Confirmar</button>
+                                <Link to='/' className='setting-btn' >Voltar</Link>
+                            </div>
                         </div>
                     </form>
                 </div>

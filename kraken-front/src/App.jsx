@@ -5,6 +5,7 @@ import Home from './pages/home/Home'
 import Category from './components/category/Category'
 import AuthGuard from './components/Login/AuthGuard' 
 import Login from './components/Login/Login'
+import Setting from './components/setup/Setting'
 
 const page = createBrowserRouter([
   {
@@ -15,7 +16,8 @@ const page = createBrowserRouter([
       </AuthGuard>
     ),
     children: [
-      { path: 'categoria', element: <Category />}
+      { path: 'categoria', element: <Category />},
+      { path: 'setting', element: <Setting />}
     ]
   },
   { path: '/', element: <Login /> },
