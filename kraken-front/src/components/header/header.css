@@ -1,0 +1,9 @@
+img {
+    width: 7.5%;
+}
+
+.container-header {
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+}

@@ -1,0 +1,50 @@
+.container-carousel {
+    margin-top: 3.5rem;
+}
+
+.img-car {
+    width: 100%;
+    height: 550px;
+}
+
+.carousel-prev {
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    border: none;
+    background: transparent;
+}
+
+.carousel-next {
+    position: absolute;
+    top: 50%;
+    left: 90%;
+    border: none;
+    background: transparent;
+}
+
+.car-img {
+    width: "800";
+    height: "400"
+}
+
+.carousel-prev:hover, .carousel-next:hover {
+    cursor: pointer;
+} 
+
+.container-setting {
+    margin: 7rem;
+}
+
+.container-item {
+    width: 420px;
+}
+
+.container-checking {
+    display: flex;
+    margin: 7rem;
+}
+
+.content-value{
+    width: 18rem;
+}

@@ -1,0 +1,53 @@
+.category {
+    width: 18rem;
+}
+
+.container-catalog {
+    display: flex;
+    margin: -5vh 12vw;
+}
+
+.catalog {
+    display: grid;
+    flex-direction: row;
+    gap: 5rem;
+    grid-template-columns:  repeat(4, 1fr);
+}
+
+.container-product {
+    width: 12rem;
+}
+
+.container-accordion{
+    margin: 7rem;
+}
+
+.container-list {
+    margin: 7rem;
+    height: 50vh;
+    width: 95%;
+}
+
+.content-list {
+    height: 80vh;
+}
+
+.list-product {
+    width: 20%;
+}
+
+.list-content{
+    width: 80%;
+    height: 100%;
+}
+
+.value-product {
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.cart-shopping {
+    padding: 1rem;
+    margin: 1rem;
+}
