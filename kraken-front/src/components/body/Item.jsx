@@ -19,12 +19,16 @@ function Item ({title, unitValue, qntd}) {
                     <Card.Description>
                         Valor Unitário:
 			            <Text textStyle="lg">
-                            <FormatNumber value={unitValue} />
+                            R$ <FormatNumber value={unitValue} />
                         </Text>
                         Quantidade:
                         <NumberInputRoot defaultValue={qntd} width="50px" marginLeft="2rem" >
                             <NumberInputField marginLeft="-7" />
                         </NumberInputRoot>
+                        Valor Total:
+			            <Text textStyle="lg">
+                            R$ <FormatNumber value={unitValue*qntd} />
+                        </Text>
                     </Card.Description>
                     <HStack mt="2">
                     </HStack>

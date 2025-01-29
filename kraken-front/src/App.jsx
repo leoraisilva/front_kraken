@@ -1,17 +1,21 @@
-  import './App.css'
-  import { createBrowserRouter } from 'react-router-dom'
-  import Home from '../src/components/pages/Home'
-  import Menu from '../src/components/pages/Menu'
-  import Checking from "../src/components/body/Checking"
+  import './App.css';
+  import { createBrowserRouter } from 'react-router-dom';
+  import Home from '../src/components/pages/Home';
+  import Menu from '../src/components/pages/Menu';
+  import Checking from "../src/components/body/Checking";
   import List from "../src/components/body/List";
+  import AuthGuard from '../src/components/login/AuthGuards' 
   import Register from "../src/components/body/Register";
   import Setting from "../src/components/body/Setting";
+  import Login from '../src/components/login/Login';
 
   const page = createBrowserRouter([
     {
       path: '/kraken/',
       element: (
+        <AuthGuard requireAuth={true}>
           <Home />
+        </AuthGuard>
       ),
       children: [
         { path: '', element: <Menu /> },
@@ -21,6 +25,8 @@
         { path: 'register', element: <Register />}
       ]
     },
+    { path: '/', element: <Login/> },
+    { path: '/register', element: <Setting /> },
     { path: "*", element: <div>404 - Página não encontrada</div> } 
   ])
 

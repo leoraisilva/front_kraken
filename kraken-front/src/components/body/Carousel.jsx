@@ -5,7 +5,7 @@ function Carousel({image1, image2, image3}) {
         <>
         <div id="carouselExample" className="carousel slide container-carousel">
           <div className="carousel-inner">
-          <div className="carousel-item active">
+          <div className="carousel-item ">
             <img src={image1}  className="bd-placeholder-img bd-placeholder-img-lg d-block w-100 img-car" alt="Promoção" />
           </div>
             <div className="carousel-item active">
