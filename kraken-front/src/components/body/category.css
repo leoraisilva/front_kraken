@@ -52,6 +52,10 @@
     margin: 1rem;
 }
 
+.btn-hide:hover {
+    cursor: pointer;
+}
+
 
 @media (max-width: 1370px) {
     .container-catalog {

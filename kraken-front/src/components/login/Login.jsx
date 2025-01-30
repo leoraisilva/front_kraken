@@ -37,7 +37,7 @@ import { useEffect, useState } from 'react';
             const user = clients.find(client => client.usuario === usuario && client.senha === senha);
     
             if (user) {
-                localStorage.setItem('authToken', 'fake-jwt-token'); 
+                localStorage.setItem('token', 'fake-jwt-token'); 
                 localStorage.setItem('userId', user.idCliente);
                 navigate('/kraken/');
             } else {
