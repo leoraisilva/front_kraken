@@ -1,4 +1,5 @@
-import "./category.css";
+import "../category.css";
+import { Link } from 'react-router-dom';
 
 function Register () {
     return (
@@ -36,7 +37,21 @@ function Register () {
                         <option value="3">Three</option>
                     </select>
                 </div>
-                
+                <div class="col-md-12">
+                    <p><Link to="/kraken/registro-categoria" class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Registrar a Categoria</Link></p>
+                </div>
+                <div class="col-md-12">
+                    <label for="inputCity" class="form-label">Estoque</label>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="col-md-12">
+                    <p><Link to="/kraken/store" class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Registrar Estoque</Link></p>
+                </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Sign in</button>
                 </div>

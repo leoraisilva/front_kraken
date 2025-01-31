@@ -1,5 +1,5 @@
 import Item from "./Item";
-import "./carousel.css";
+import "../carousel.css";
 import { Button, Card, Text } from "@chakra-ui/react"
 
 function Checking() {

@@ -1,6 +1,6 @@
-import "./carousel.css";
+import "../carousel.css";
 import { useState } from "react"
-import { NumberInputField, NumberInputRoot } from "../../components/ui/number-input"
+import { NumberInputField, NumberInputRoot } from "../../ui/number-input"
 import { Badge, Box, Button, Card, HStack, Image, FormatNumber, Text  } from "@chakra-ui/react"
 function Item ({title, unitValue, qntd}) {
     return (

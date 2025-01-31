@@ -1,4 +1,4 @@
-import "./carousel.css"
+import "../carousel.css"
 
 function Carousel({image1, image2, image3}) {
     return (

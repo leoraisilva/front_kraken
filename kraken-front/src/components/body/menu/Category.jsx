@@ -1,4 +1,4 @@
-import "./category.css";
+import "../category.css";
 
 function Category ({image, title, text}) {
     return (

@@ -2,12 +2,14 @@ import './App.css';
 import { createBrowserRouter, Outlet } from 'react-router-dom'; 
 import Home from '../src/components/pages/Home';
 import Menu from '../src/components/pages/Menu';
-import Checking from "../src/components/body/Checking";
-import List from "../src/components/body/List";
+import Checking from "./components/body/checking/Checking";
+import List from "./components/body/list/List";
 import AuthGuard from '../src/components/login/AuthGuards';
-import Register from "../src/components/body/Register";
-import Setting from "../src/components/body/Setting";
+import Register from "./components/body/register/Register";
+import Setting from "./components/body/register/Setting";
 import Login from '../src/components/login/Login';
+import Store from './components/body/register/Store'
+import RegisterCategory from './components/body/register/RegisterCategory';
 
 const ProtectedRoute = ({ children }) => {
   return (
@@ -26,7 +28,9 @@ const page = createBrowserRouter([
       { path: 'list', element: <ProtectedRoute><List /></ProtectedRoute> }, 
       { path: 'setting', element: <ProtectedRoute><Setting /></ProtectedRoute> },
       { path: 'checking', element: <ProtectedRoute><Checking /></ProtectedRoute> }, 
-      { path: 'register', element: <ProtectedRoute><Register /></ProtectedRoute> } 
+      { path: 'register', element: <ProtectedRoute><Register /></ProtectedRoute> },
+      { path: 'registro-categoria', element: <ProtectedRoute><RegisterCategory /></ProtectedRoute> },
+      { path: 'store', element: <ProtectedRoute><Store /></ProtectedRoute> }
     ]
   },
   { path: '/', element: <Login /> },

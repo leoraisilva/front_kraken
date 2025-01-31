@@ -1,9 +1,9 @@
 import Category from "./Category";
-import "./category.css";
-import image1 from '../../../public/catalog/Leonardo_Phoenix_Illustrate_a_vibrant_and_organized_scene_show_0.jpg' 
-import image2 from '../../../public/catalog/Leonardo_Phoenix_Create_a_vibrant_and_mouthwatering_image_that_2.jpg' 
-import image3 from '../../../public/catalog/Leonardo_Phoenix_Create_an_image_that_showcases_a_harmonious_a_0.jpg' 
-import image4 from '../../../public/catalog/Leonardo_Phoenix_A_warmly_lit_inviting_scene_depicting_a_skill_3.jpg' 
+import "../category.css";
+import image1 from '../../../../public/catalog/Leonardo_Phoenix_Illustrate_a_vibrant_and_organized_scene_show_0.jpg' 
+import image2 from '../../../../public/catalog/Leonardo_Phoenix_Create_a_vibrant_and_mouthwatering_image_that_2.jpg' 
+import image3 from '../../../../public/catalog/Leonardo_Phoenix_Create_an_image_that_showcases_a_harmonious_a_0.jpg' 
+import image4 from '../../../../public/catalog/Leonardo_Phoenix_A_warmly_lit_inviting_scene_depicting_a_skill_3.jpg' 
 
 function Catalog() {
     return (
