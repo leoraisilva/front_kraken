@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import "../category.css";
 import { Link } from 'react-router-dom';
 
 function Register () {
+
     return (
         <>
         <div className="container-setting">
