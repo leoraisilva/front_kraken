@@ -1,62 +1,55 @@
 import "../category.css";
+import { useEffect, useState } from "react";
 import Product from "./Product";
 
 function List () {
+    const [categ, setCateg] = useState([]);
+    const [productCateg, setProductCateg] = useState([]);
+    const [error, setError] = useState('');
+
+    useEffect(() => {
+        fetch(`http://localhost:8081/categoria`, {
+            method: 'GET',
+            mode: 'cors'
+        })
+        .then(res=>{
+            if(!res.ok)
+                throw new Error("Erro ao inicializar");
+            return res.json()
+        })
+        .then(data => {
+            setCateg(data)
+        })
+        .catch(error=>{
+            console.error("Erro na inicialização dos dados", error);
+            setError("Erro no Sistema, tente mais tarde");
+        })
+    })
+
     return (
         <>
             <div className="container-list">
-                <div className="row content-list">
-                    <div className="col-4 list-product">
-                        <div id="list-example" className="list-group">
-                        <a className="list-group-item list-group-item-action" href="#list-item-1">Produto de Limpeza</a>
-                        <a className="list-group-item list-group-item-action" href="#list-item-2">Produto Alimenticio</a>
-                        <a className="list-group-item list-group-item-action" href="#list-item-3">Eletrodomestico</a>
-                        <a className="list-group-item list-group-item-action" href="#list-item-4">Produto de serviço</a>
+                <div class="row content-list">
+                    <div class="col-4 list-product">
+                        <div id="list-example" class="list-group">
+                        {categ.map((item, index) => (
+                            <a class="list-group-item list-group-item-action" href={"#"+item.categoriaId}>{item.titulo}</a>
+                        ))}
                         </div>
                     </div>
-                    <div className="col-8 list-content">
-                        <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" className="scrollspy-example list-content" tabindex="0">
-                            <h4 id="list-item-1">Produto de Limpeza</h4>
-                            <div className="value-product">
-                                <Product />
-                                <Product />
-                                <Product />
-                                <Product />
-                                <Product />
-                                <Product />
-                                <Product />
-                                <Product />
+                    <div class="col-8 list-content">
+                        <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" class="scrollspy-example list-content" tabindex="0">
+                            {categ.map((item, index) => (
+                            <div key={index}>
+                                <h4 id={item.categoriaId}>{item.titulo}</h4>
+                                <div className="value-product">
+                                    <Product />
+                                    <Product />
+                                    <Product />
+                                    <Product />
+                                </div>
                             </div>
-                            <h4 id="list-item-2">Produto Alimenticio</h4>
-                            <div className="value-product">
-                                <Product />
-                                <Product />
-                                <Product />
-                                <Product />
-                                <Product />
-                                <Product />
-                                <Product />
-                                <Product />
-                                <Product />
-                                <Product />
-                                <Product />
-                            </div>
-                            <h4 id="list-item-3">Eletrodomestico</h4>
-                            <div className="value-product">
-                                <Product />
-                                <Product />
-                                <Product />
-                                <Product />
-                                <Product />
-                                <Product />
-                            </div>
-                            <h4 id="list-item-4">Produto de serviço</h4>
-                            <div className="value-product">
-                                <Product />
-                                <Product />
-                                <Product />
-                                <Product />
-                            </div>
+                            ))}
                         </div>
                     </div>
                 </div>
