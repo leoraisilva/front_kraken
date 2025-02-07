@@ -7,7 +7,7 @@ function Catalog() {
     const [categ, setCateg] = useState([])
     const [error, setError] = useState('')
     useEffect(() =>{
-        fetch(`http://localhost:8081/categoria`, {
+        fetch(`http://localhost:8083/categoria`, {
             method: 'GET',
             mode: 'cors'
         })

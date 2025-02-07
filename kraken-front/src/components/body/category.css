@@ -41,8 +41,14 @@
     height: 100%;
 }
 
+.object-content h4 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
 .value-product {
     display: grid;
+    margin-bottom: 3rem;
     gap: 15px;
     grid-template-columns: repeat(5, 1fr);
 }

@@ -18,7 +18,7 @@ function RegisterCategory() {
         formData.append('descricao', descricao);
 
         try {
-            const response = await fetch(`http://localhost:8081/categoria`, {
+            const response = await fetch(`http://localhost:8083/categoria`, {
                 method: 'POST',
                 body: formData, 
             });

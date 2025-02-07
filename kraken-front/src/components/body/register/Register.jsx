@@ -16,7 +16,7 @@ function Register () {
     const [image, setImage] = useState(null);
     
     useEffect(()=> {
-        fetch(`http://localhost:8081/categoria`, {
+        fetch(`http://localhost:8083/categoria`, {
             method: 'GET',
             mode: 'cors'
         })
@@ -55,32 +55,36 @@ function Register () {
 
     const handleProductRegister = async (k) => {
         k.preventDefault();
-
+    
+        if (!nomeProduto || !descricao || !categoriaId || !valorUnitario || !estoqueid || !quantidadeProduto || !image) {
+            setError("Todos os campos são obrigatórios.");
+            return;
+        }
+    
         const formData = new FormData();
         formData.append('nomeProduto', nomeProduto);
         formData.append('descricao', descricao);
         formData.append('valorUnitario', valorUnitario);
         formData.append('categoriaId', categoriaId);
-        formData.append('estoque_id', estoqueid);
+        formData.append('estoqueId', estoqueid);
         formData.append('quantidadeProduto', quantidadeProduto);
         formData.append('image', image);
-
-        console.log(formData);
-        try{
-            const response = await fetch(`http://localhost:8083/produto`, {
+    
+        try {
+            const response = await fetch(`http://localhost:8081/produto`, {
                 method: 'POST',
                 body: formData
-            })
-            if (!response.ok) 
-                throw new Error(`Erro na requisição ${response.status}`);
+            });
+    
+            if (!response.ok) throw new Error(`Erro na requisição ${response.status}`);
+    
             const result = await response.json();
-            
-            navigate('/kraken/'); 
-        } catch (Error) {
-            setError('Erro no cadastro', error);
+            navigate('/kraken/');
+        } catch (error) {
+            setError('Erro no cadastro');
             console.error(error);
         }
-    }
+    };
 
     return (
         <>
@@ -119,7 +123,7 @@ function Register () {
                 <div className="col-md-12">
                     <label className="form-label">Estoque</label>
                     <select className="form-select" aria-label="Default select example" value={estoqueid} onChange={(e) => setEstoqueid(e.target.value)} required >
-                        <option selected>Open this select menu</option>
+                        <option selected>Seleciona o Estoque</option>
                         {store.map((produto, index) => (
                             <option value={produto.estoqueid} key={index}>{produto.nomeEstoque}</option>
                         ))}
