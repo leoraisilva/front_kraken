@@ -50,7 +50,7 @@
     display: grid;
     margin-bottom: 3rem;
     gap: 15px;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .cart-shopping {

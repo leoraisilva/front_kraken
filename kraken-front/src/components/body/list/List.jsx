@@ -61,11 +61,13 @@ function List () {
                         {categ.map((item) => (
                                 <div key={item.categoriaId} className="object-content">
                                     <h4 id={item.categoriaId}>{item.titulo}</h4>
-                                    {produto.filter((obj) => obj.categoriaId === item.categoriaId).map((obj) => (
-                                        <div className="value-product" key={obj.produtoId}>
-                                            <Product image={'data:image/png;base64,' + obj.image} produto={obj.nomeProduto} valor={'R$ '+obj.valorUnitario.toFixed(2)} />
-                                        </div>
-                                    ))}
+                                    <div className="value-product" >
+                                        {produto.filter((obj) => obj.categoriaId === item.categoriaId).map((obj) => (
+                                            <div key={obj.produtoId}>
+                                                <Product image={'data:image/png;base64,' + obj.image} produto={obj.nomeProduto} valor={'R$ '+obj.valorUnitario.toFixed(2)} />
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             ))}
                         </div>

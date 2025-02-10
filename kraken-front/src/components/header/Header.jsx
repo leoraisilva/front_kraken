@@ -22,9 +22,6 @@ function Header() {
                         <Link to="/kraken/checking" className="nav-link">Checking</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/kraken/" className="nav-link">Wishlist</Link>
-                    </li>
-                    <li className="nav-item">
                         <Link to="/kraken/register" className="nav-link">Register</Link>
                     </li>
                     <li className="nav-item">
