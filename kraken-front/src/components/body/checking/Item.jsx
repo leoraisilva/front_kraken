@@ -1,18 +1,12 @@
 import "../carousel.css";
-import { useState } from "react"
 import { NumberInputField, NumberInputRoot } from "../../ui/number-input"
 import { Badge, Box, Button, Card, HStack, Image, FormatNumber, Text  } from "@chakra-ui/react"
-function Item ({title, unitValue, qntd}) {
+function Item ({title, imagem, unitValue, qntd}) {
     return (
         <>
             <div className="card mb-3 container-item" >
-            <Card.Root flexDirection="row" overflow="hidden" width={600}>
-                <Image
-                objectFit="cover"
-                width={220}
-                src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-                alt="Caffe Latte"
-                />
+            <Card.Root flexDirection="row" borderColor={'#696969'}  width={600} height={275}>
+                <Image width={200} height={200} src={imagem} />
                 <Box>
                 <Card.Body>
                     <Card.Title mb="2">{title}</Card.Title>
@@ -33,8 +27,8 @@ function Item ({title, unitValue, qntd}) {
                     <HStack mt="2">
                     </HStack>
                 </Card.Body>
-                <Card.Footer>
-                    <Button>Deletar</Button>
+                <Card.Footer marginTop={-10}>
+                    <Button borderRadius={8}>Deletar</Button>
                 </Card.Footer>
                 </Box>
             </Card.Root>
