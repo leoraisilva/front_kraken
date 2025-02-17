@@ -1,7 +1,7 @@
 import "../carousel.css";
 import { NumberInputField, NumberInputRoot } from "../../ui/number-input"
 import { Badge, Box, Button, Card, HStack, Image, FormatNumber, Text  } from "@chakra-ui/react"
-function Item ({title, imagem, unitValue, qntd}) {
+function Item ({title, imagem, unitValue, qntd, onQntdChange, idItem, total}) {
     return (
         <>
             <div className="card mb-3 container-item" >
@@ -16,12 +16,12 @@ function Item ({title, imagem, unitValue, qntd}) {
                             R$ <FormatNumber value={unitValue} />
                         </Text>
                         Quantidade:
-                        <NumberInputRoot defaultValue={qntd} width="50px" marginLeft="2rem" >
-                            <NumberInputField marginLeft="-7" />
+                        <NumberInputRoot width="50px" marginLeft="2rem">
+                            <NumberInputField value={qntd} marginLeft="-7" onChange={(valueString) => onQntdChange(idItem, Number(valueString))} />
                         </NumberInputRoot>
                         Valor Total:
 			            <Text textStyle="lg">
-                            R$ <FormatNumber value={unitValue*qntd} />
+                            R$ <FormatNumber value={total} />
                         </Text>
                     </Card.Description>
                     <HStack mt="2">
