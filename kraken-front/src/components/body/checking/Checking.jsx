@@ -4,10 +4,10 @@ import { Button, Card, FormatNumber, Text  } from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 
 function Checking() {
-    const [item, setItem] = useState([]);
+    const [valor, setValor] = useState(0)
+    const [desconto, setDesconto] = useState(0)
     const [produto, setProduto] = useState([]);
     const [error, setError] = useState('');
-    const [quantidades, setQuantidades] = useState([]);
 
     useEffect(() => {
         fetch(`http://localhost:8085/itens`, {
@@ -21,13 +21,6 @@ function Checking() {
             return res.json()
         })
         .then(data => {
-            setItem(data);
-            if (data && data.length > 0) {
-                setQuantidades(prevQuantidades => [
-                    ...prevQuantidades,  
-                    { idItem: prevQuantidades.idItem, quantidade: prevQuantidades.quantidadeIten } 
-                ]);
-            }
             const produtoItem = data.map(valor =>
                 fetch(`http://localhost:8081/produto/${valor.produto}`, {
                     method: 'GET',
@@ -59,21 +52,63 @@ function Checking() {
             setError(error);
         })
     }, []);
+    
+    
 
-    const atualizarQuantidade = (idItem, quantidade) => {
-        setQuantidades(prev => ({
-            ...prev,
-            [idItem]: quantidade,
-        }));
+    useEffect(() => {
+        const total = produto.reduce((acc, entidade) => {
+            return acc + (Number(entidade.quantidadeIten) * Number(entidade.prodValor.valorUnitario));
+        }, 0);
+        setValor(total);
+    }, [produto]);
+
+    
+    const handleDeleteItem = async (idItem) => {
+        try {
+            const response = await fetch(`http://localhost:8085/itens/${idItem}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            if(!response.ok) {
+                throw new Error("erro ao deletar a entidade");
+            }
+        } catch (error) {
+            console.log("Erro na tentativa deletar", error);
+            setError(error)
+        }
+        window.location.reload();
+    }
+
+    const handleQntdChange = async (idItem, newQntd) => {
+        const updatedProdutos = produto.map((prod) => {
+            if (prod.idItem === idItem) {
+                return { ...prod, quantidadeIten: newQntd };
+            }
+            return prod;
+        });
+    
+        setProduto(updatedProdutos);
+        console.log(produto);
     };
 
     return (
         <> 
             <div className="row container-checking">
-                {console.log(quantidades)}
-                <div className="col-6"  >
+                
+                <div className="col-6" >
                 {produto.map((entidade, index) =>  (
-                    <Item key={index} imagem={`data:image/png;base64,${entidade.prodValor.image}`} title={entidade.prodValor.nomeProduto} unitValue={entidade.prodValor.valorUnitario} qntd={entidade.idItem === quantidades.idItem ? quantidades.quantidade : entidade.quantidadeIten } onQntdChange={(quantidade) => atualizarQuantidade(entidade.idItem, quantidade)} total={quantidades.quantidade*entidade.prodValor.valorUnitario} />
+                    <Item key={index}
+                        idItem={entidade.idItem}
+                        imagem={`data:image/png;base64,${entidade.prodValor.image}`} 
+                        title={entidade.prodValor.nomeProduto}
+                        unitValue={entidade.prodValor.valorUnitario} 
+                        qntd={entidade.quantidadeIten } 
+                        total={entidade.quantidadeIten*entidade.prodValor.valorUnitario} 
+                        onQntdChange={(newQntd) => handleQntdChange(entidade.idItem, newQntd)}
+                        handleDelete={() => handleDeleteItem(entidade.idItem)}
+                    />
                 ))}
                 </div>
                 <div className="col-6">
@@ -84,15 +119,15 @@ function Checking() {
                             <Card.Description>
                                 Valor Pedido:
                                 <Text textStyle="lg">
-                                    R$ <FormatNumber value={1} />
+                                    R$ <FormatNumber value={valor} />
                                 </Text>
                                 Desconto:
                                 <Text textStyle="lg">
-                                    R$ <FormatNumber value={0} />
+                                    <FormatNumber value={0} /> %
                                 </Text>
                             </Card.Description>
                             <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
-                                R$ <FormatNumber value={0} />
+                                R$ <FormatNumber value={valor + valor*(desconto/100)} />
                             </Text>
                         </Card.Body>
                         <Card.Footer gap="2">
