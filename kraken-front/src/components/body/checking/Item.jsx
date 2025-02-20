@@ -1,7 +1,7 @@
 import "../carousel.css";
 import { NumberInputField, NumberInputRoot } from "../../ui/number-input"
-import { Box, Button, Card, HStack, Image, FormatNumber, Text, NumberInputScrubber  } from "@chakra-ui/react"
-function Item ({idItem, title, imagem, unitValue, qntd, onQntdChange, handleDelete, total}) {
+import { Box, Button, Card, HStack, Image, FormatNumber, Text } from "@chakra-ui/react"
+function Item ({idItem, title, imagem, unitValue, qntd, onQntdChange, handleDelete, max, total}) {
     const handleIncrement = () => {
         const newQntd = qntd + 1;
         if (onQntdChange) {
@@ -30,7 +30,7 @@ function Item ({idItem, title, imagem, unitValue, qntd, onQntdChange, handleDele
                                 R$ <FormatNumber value={unitValue} />
                             </Text>
                             Quantidade:
-                            <NumberInputRoot width="50px" value={qntd} onIncrement={handleIncrement} onDecrement={handleDecrement} marginLeft="2rem" min={1} max={10}>
+                            <NumberInputRoot width="50px" value={qntd} onIncrement={handleIncrement} onDecrement={handleDecrement} marginLeft="2rem" min={0} max={max}>
                                 <NumberInputField marginLeft="-7" value={qntd} readOnly />
                             </NumberInputRoot>
                             Valor Total:

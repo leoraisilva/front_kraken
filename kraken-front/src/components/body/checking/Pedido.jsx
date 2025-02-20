@@ -1,7 +1,26 @@
 import "../carousel.css";
+import { NumberInputField, NumberInputRoot } from "../../ui/number-input"
 import { Button, Card, FormatNumber, Text  } from "@chakra-ui/react"
+import { useState } from "react";
+import { Link } from 'react-router-dom';
 
-function Pedido({valor, desconto}) {
+function Pedido({valor}) {
+    const [desconto, setDesconto] = useState(0);
+
+    const handleIncrement = () => {
+        const newQntd = desconto + 1;
+        if (newQntd) {
+            setDesconto(newQntd)
+        }
+    };
+
+    const handleDecrement = () => {
+        const newQntd = desconto - 1;
+        if (newQntd) {
+            setDesconto(newQntd)
+        }
+    };
+
     return (
         <>
             <div className="cart-shopping">
@@ -14,17 +33,17 @@ function Pedido({valor, desconto}) {
                                 R$ <FormatNumber value={valor} />
                             </Text>
                             Desconto:
-                            <Text textStyle="lg">
-                                <FormatNumber value={desconto} /> %
-                            </Text>
+                            <NumberInputRoot width="50px" value={desconto} onIncrement={handleIncrement} onDecrement={handleDecrement} marginLeft="2rem" min={0} max={100}>
+                                <NumberInputField marginLeft="-7" value={desconto} readOnly />
+                            </NumberInputRoot>
                         </Card.Description>
                         <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
-                            R$ <FormatNumber value={valor + valor*(desconto/100)} />
+                            R$ <FormatNumber value={valor - valor*(desconto/100)} />
                         </Text>
                     </Card.Body>
                     <Card.Footer gap="2">
                         <Button variant="solid">Buy now</Button>
-                        <Button variant="ghost">Add to cart</Button>
+                        <Button variant="ghost"><Link to="/kraken/list" className="nav-link">Add to cart</Link></Button>
                     </Card.Footer>
                 </Card.Root>
             </div>

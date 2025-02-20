@@ -105,6 +105,7 @@ function Checking() {
                         title={entidade.prodValor.nomeProduto}
                         unitValue={entidade.prodValor.valorUnitario} 
                         qntd={entidade.quantidadeIten } 
+                        max={entidade.prodValor.quantidadeProduto}
                         total={entidade.quantidadeIten*entidade.prodValor.valorUnitario} 
                         onQntdChange={(newQntd) => handleQntdChange(entidade.idItem, newQntd)}
                         handleDelete={() => handleDeleteItem(entidade.idItem)}
