@@ -1,7 +1,7 @@
 import Item from './Item'; 
 import "../carousel.css";
-import { Button, Card, FormatNumber, Text  } from "@chakra-ui/react"
 import { useEffect, useState } from "react";
+import Pedido from './Pedido';
 
 function Checking() {
     const [valor, setValor] = useState(0)
@@ -112,30 +112,7 @@ function Checking() {
                 ))}
                 </div>
                 <div className="col-6">
-                    <div className="cart-shopping">
-                    <Card.Root className="cart-shopping" maxW="sm" borderColor={'#696969'}>
-                        <Card.Body>
-                            <Card.Title>Valor total do Pedido</Card.Title>
-                            <Card.Description>
-                                Valor Pedido:
-                                <Text textStyle="lg">
-                                    R$ <FormatNumber value={valor} />
-                                </Text>
-                                Desconto:
-                                <Text textStyle="lg">
-                                    <FormatNumber value={0} /> %
-                                </Text>
-                            </Card.Description>
-                            <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
-                                R$ <FormatNumber value={valor + valor*(desconto/100)} />
-                            </Text>
-                        </Card.Body>
-                        <Card.Footer gap="2">
-                            <Button variant="solid">Buy now</Button>
-                            <Button variant="ghost">Add to cart</Button>
-                        </Card.Footer>
-                    </Card.Root>
-                    </div>
+                    <Pedido valor={valor} desconto={0} />
                 </div>
             </div>
             
