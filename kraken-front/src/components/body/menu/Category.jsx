@@ -1,6 +1,7 @@
 import "../category.css";
+import { Link } from 'react-router-dom';
 
-function Category ({image, title, text}) {
+function Category ({image, title, text, url}) {
     return (
         <>
         <div className="card category">
@@ -8,7 +9,7 @@ function Category ({image, title, text}) {
             <div className="card-body">
                 <h5 className="card-title">{title}</h5>
                 <p className="card-text">{text}</p>
-                <a href="#" className="btn btn-primary">Ir ver</a>
+                <Link to={url} className="btn btn-primary" >Ir Ver</Link>
             </div>
         </div>
         </>

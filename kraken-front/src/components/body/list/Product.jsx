@@ -1,14 +1,17 @@
-function Product({image, produto, valor}) {
+import { Link } from "react-router-dom";
+import "../category.css";
+
+function Product({image, produto, valor, url}) {
     return (
         <>
         <div>
-            <div className="card container-product">
+            <Link to={url} className="card container-product lista-produto">
                 <img className="bd-placeholder-img card-img-top" src={image}/>
                 <div className="card-body">
                     <h5 className="card-title">{produto}</h5>
                     <p className="card-text">{valor}</p>
                 </div>
-            </div>
+            </Link>
         </div>
         </>
     )

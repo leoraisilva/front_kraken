@@ -91,7 +91,6 @@ function Register () {
         <div className="container-setting">
             <h2>Cadastrar</h2>
             <form className="row g-3" onSubmit={handleProductRegister}>
-                
                 <div className="col-12">
                     <label className="form-label">Nome do Produto</label>
                     <input type="text" className="form-control" onChange={(e) => setNomeProduto(e.target.value)} required />

@@ -64,7 +64,7 @@ function List () {
                                     <div className="value-product" >
                                         {produto.filter((obj) => obj.categoriaId === item.categoriaId).map((obj) => (
                                             <div key={obj.produtoId}>
-                                                <Product image={`data:image/png;base64,${obj.image}`} produto={obj.nomeProduto} valor={'R$ '+obj.valorUnitario.toFixed(2)} />
+                                                <Product url={`/kraken/produto/${obj.produtoId}`} image={`data:image/png;base64,${obj.image}`} produto={obj.nomeProduto} valor={'R$ '+obj.valorUnitario.toFixed(2)} />
                                             </div>
                                         ))}
                                     </div>

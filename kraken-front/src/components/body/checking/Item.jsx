@@ -19,7 +19,7 @@ function Item ({idItem, title, imagem, unitValue, qntd, onQntdChange, handleDele
     return (
         <>
             <div className="card mb-3 container-item" id={idItem} >
-                <Card.Root flexDirection="row" borderColor={'#696969'}  width={600} height={275}>
+                <Card.Root flexDirection="row" width={600} height={275}>
                     <Image width={200} height={200} src={imagem} />
                     <Box>
                     <Card.Body>
@@ -42,7 +42,7 @@ function Item ({idItem, title, imagem, unitValue, qntd, onQntdChange, handleDele
                         </HStack>
                     </Card.Body>
                     <Card.Footer marginTop={-10}>
-                        <Button borderRadius={8} onClick={handleDelete}>Deletar</Button>
+                        <Button padding={2} borderRadius={8} onClick={handleDelete}>Deletar</Button>
                     </Card.Footer>
                     </Box>
                 </Card.Root>

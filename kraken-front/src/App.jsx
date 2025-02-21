@@ -10,6 +10,7 @@ import Setting from "./components/body/register/Setting";
 import Login from '../src/components/login/Login';
 import Store from './components/body/register/Store'
 import RegisterCategory from './components/body/register/RegisterCategory';
+import Comprar from './components/body/list/Comprar';
 
 const ProtectedRoute = ({ children }) => {
   return (
@@ -30,6 +31,7 @@ const page = createBrowserRouter([
       { path: 'checking', element: <ProtectedRoute><Checking /></ProtectedRoute> }, 
       { path: 'register', element: <ProtectedRoute><Register /></ProtectedRoute> },
       { path: 'registro-categoria', element: <ProtectedRoute><RegisterCategory /></ProtectedRoute> },
+      { path: 'produto/:produto', element: <ProtectedRoute><Comprar /></ProtectedRoute> },
       { path: 'store', element: <ProtectedRoute><Store /></ProtectedRoute> }
     ]
   },

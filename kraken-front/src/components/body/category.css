@@ -62,6 +62,23 @@
     cursor: pointer;
 }
 
+.lista-produto{
+    text-decoration: none;
+}
+
+.lista-produto:hover {
+    cursor: pointer;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);    
+}
+
+.produto-comprar{
+    margin: 5rem;
+}
+
+.compra-value img{
+    height: 70vh;
+    width: 60vw;
+}
 
 @media (max-width: 1370px) {
     .container-catalog {

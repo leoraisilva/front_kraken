@@ -31,7 +31,7 @@ function Catalog() {
         <div className="container-catalog">
             {categ.map((item, index)=>(
                 <div className="catalog" key={index}>
-                <Category title={item.titulo} text={item.descricao} image={'data:image/png;base64,'+item.imagem} />
+                <Category title={item.titulo} text={item.descricao} image={`data:image/png;base64, ${item.imagem}`} url={`/kraken/list#${item.categoriaId}`} />
            </div>
             ))}
             

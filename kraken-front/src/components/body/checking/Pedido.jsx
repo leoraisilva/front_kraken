@@ -24,27 +24,29 @@ function Pedido({valor}) {
     return (
         <>
             <div className="cart-shopping">
-                <Card.Root className="cart-shopping" maxW="sm" borderColor={'#696969'}>
-                    <Card.Body>
-                        <Card.Title>Valor total do Pedido</Card.Title>
-                        <Card.Description>
-                            Valor Pedido:
-                            <Text textStyle="lg">
-                                R$ <FormatNumber value={valor} />
+                <Card.Root className="cart-shopping" maxW="sm">
+                    <form>
+                        <Card.Body>
+                            <Card.Title>Valor total do Pedido</Card.Title>
+                            <Card.Description>
+                                Valor Pedido:
+                                <Text textStyle="lg">
+                                    R$ <FormatNumber value={valor} />
+                                </Text>
+                                Desconto:
+                                <NumberInputRoot width="50px" value={desconto} onIncrement={handleIncrement} onDecrement={handleDecrement} marginLeft="2rem" min={0} max={100}>
+                                    <NumberInputField marginLeft="-7" value={desconto} readOnly />
+                                </NumberInputRoot>
+                            </Card.Description>
+                            <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
+                                R$ <FormatNumber value={(valor - valor*(desconto/100)).toFixed(2)} />
                             </Text>
-                            Desconto:
-                            <NumberInputRoot width="50px" value={desconto} onIncrement={handleIncrement} onDecrement={handleDecrement} marginLeft="2rem" min={0} max={100}>
-                                <NumberInputField marginLeft="-7" value={desconto} readOnly />
-                            </NumberInputRoot>
-                        </Card.Description>
-                        <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
-                            R$ <FormatNumber value={valor - valor*(desconto/100)} />
-                        </Text>
-                    </Card.Body>
-                    <Card.Footer gap="2">
-                        <Button variant="solid">Buy now</Button>
-                        <Button variant="ghost"><Link to="/kraken/list" className="nav-link">Add to cart</Link></Button>
-                    </Card.Footer>
+                        </Card.Body>
+                        <Card.Footer gap="2">
+                            <Button variant="solid" padding={2} borderRadius={8} >Buy now</Button>
+                            <Button variant="ghost"><Link to="/kraken/list" className="nav-link">Add to cart</Link></Button>
+                        </Card.Footer>
+                    </form>
                 </Card.Root>
             </div>
         </>
