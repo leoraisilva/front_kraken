@@ -4,7 +4,7 @@ import { Button, Card, FormatNumber, Text  } from "@chakra-ui/react"
 import { useState } from "react";
 import { Link } from 'react-router-dom';
 
-function Pedido({valor}) {
+function Pedido({valor, submitOrder}) {
     const [desconto, setDesconto] = useState(0);
 
     const handleIncrement = () => {
@@ -43,7 +43,7 @@ function Pedido({valor}) {
                             </Text>
                         </Card.Body>
                         <Card.Footer gap="2">
-                            <Button variant="solid" padding={2} borderRadius={8} >Buy now</Button>
+                            <Button variant="solid" padding={2} borderRadius={8} onClick={submitOrder}  >Buy now</Button>
                             <Button variant="ghost"><Link to="/kraken/list" className="nav-link">Add to cart</Link></Button>
                         </Card.Footer>
                     </form>

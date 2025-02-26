@@ -2,12 +2,15 @@ import Item from './Item';
 import "../carousel.css";
 import { useEffect, useState } from "react";
 import Pedido from './Pedido';
+import { useNavigate } from 'react-router-dom';
 
 function Checking() {
-    const [valor, setValor] = useState(0)
-    const [desconto, setDesconto] = useState(0)
+    const [valor, setValor] = useState(0);
+    const [desconto, setDesconto] = useState(0);
+    const [listaOrder, setListaOrder] = useState([]);
     const [produto, setProduto] = useState([]);
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`http://localhost:8085/itens`, {
@@ -21,7 +24,7 @@ function Checking() {
             return res.json()
         })
         .then(data => {
-            const produtoItem = data.map(valor =>
+            const produtoItem = data.filter((valor) => valor.statusItem === "pendente").map(valor =>
                 fetch(`http://localhost:8081/produto/${valor.produto}`, {
                     method: 'GET',
                     mode: 'cors'
@@ -52,7 +55,11 @@ function Checking() {
             setError(error);
         })
     }, []);
-    
+
+    useEffect(() => {
+        const ids = produto.map(entidade => entidade.idItem);
+        setListaOrder(ids);
+    }, [produto]);
     
 
     useEffect(() => {
@@ -62,7 +69,6 @@ function Checking() {
         setValor(total);
     }, [produto]);
 
-    
     const handleDeleteItem = async (idItem) => {
         try {
             const response = await fetch(`http://localhost:8085/itens/${idItem}`, {
@@ -88,10 +94,70 @@ function Checking() {
             }
             return prod;
         });
-    
         setProduto(updatedProdutos);
-        console.log(produto);
     };
+
+    const handleSubmitOrder = async (evo) => {
+        evo.preventDefault();
+        const order = {
+            statusPedido: 'aguardando',
+            valorTotalPedido: valor,
+            itens: listaOrder
+        }
+    
+        try {
+            const response = await fetch(`http://localhost:8084/pedido`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(order)
+            });
+    
+            if (!response.ok) {
+                throw new Error('Erro ao cadastrar Pedido');
+            }
+    
+            const result = await response.json();
+            const updateItemsPromises = listaOrder.map(async (itemId) => {
+                const item = produto.find((obj) => obj.idItem === itemId);
+                
+                if (!item) {
+                    throw new Error(`Item com ID ${itemId} não encontrado`);
+                }
+    
+                const itemFormat = {
+                    quantidadeItem: item.quantidadeIten,
+                    statusItem: 'alocado',
+                    valorItem: item.prodValor.valorUnitario*item.quantidadeIten,
+                    produto: item.prodValor.produtoId
+                };
+                console.log(itemFormat)
+                const updateResponse = await fetch(`http://localhost:8085/itens/${item.idItem}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(itemFormat)
+                });
+    
+                if (!updateResponse.ok) {
+                    throw new Error(`Erro na atualização do item com ID ${item.idItem}`);
+                }
+    
+                return updateResponse.json(); 
+            });
+    
+            await Promise.all(updateItemsPromises);
+    
+            navigate('/kraken/order');
+            
+        } catch (error) {
+            console.log("Erro no cadastro do pedido ou atualização dos itens", error);
+            setError(error);
+        }
+    };
+    
 
     return (
         <> 
@@ -100,7 +166,7 @@ function Checking() {
                 <div className="col-6" >
                 {produto.map((entidade, index) =>  (
                     <Item key={index}
-                        idItem={entidade.idItem}
+                        idItem={entidade.idItem} 
                         imagem={`data:image/png;base64,${entidade.prodValor.image}`} 
                         title={entidade.prodValor.nomeProduto}
                         unitValue={entidade.prodValor.valorUnitario} 
@@ -113,7 +179,7 @@ function Checking() {
                 ))}
                 </div>
                 <div className="col-6">
-                    <Pedido valor={valor} desconto={0} />
+                    <Pedido valor={valor} desconto={0} submitOrder={handleSubmitOrder} />
                 </div>
             </div>
             

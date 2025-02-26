@@ -80,6 +80,18 @@
     width: 60vw;
 }
 
+.content-step{
+    margin: 5rem;
+}
+
+.container-pay {
+    margin: 2rem;
+    padding: 2rem;
+    width: 60vw;
+    border-radius: 8px;
+    border: 1px solid #aaaaaa;
+}
+
 @media (max-width: 1370px) {
     .container-catalog {
         margin: -5vh 5vw;

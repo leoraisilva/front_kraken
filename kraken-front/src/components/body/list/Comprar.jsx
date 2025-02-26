@@ -43,6 +43,7 @@ function Comprar(){
         ev.preventDefault();
         const itemForm = {
             quantidadeIten: item,
+            statusItem: 'pendente',
             valorItem: valor,
             produto: params.produto
         }

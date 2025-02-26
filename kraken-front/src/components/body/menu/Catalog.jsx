@@ -27,7 +27,6 @@ function Catalog() {
 
     return (
         <>
-        {console.log(categ)}
         <div className="container-catalog">
             {categ.map((item, index)=>(
                 <div className="catalog" key={index}>
