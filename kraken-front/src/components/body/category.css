@@ -92,6 +92,10 @@
     border: 1px solid #aaaaaa;
 }
 
+.modal-img {
+    width: 20vw;
+}
+
 @media (max-width: 1370px) {
     .container-catalog {
         margin: -5vh 5vw;

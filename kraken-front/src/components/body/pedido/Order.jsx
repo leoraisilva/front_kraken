@@ -98,7 +98,6 @@ function Order () {
           <Step key={index} label={step.label} />
         ))}
       </Stepper>
-
       <div>
         {activeStep === 0 && (
           <div>
@@ -123,7 +122,7 @@ function Order () {
         {activeStep === 1 && (
           <div>
             <h2>Operação</h2>
-            <Card.Root className="cart-shopping" maxW="sm">
+            <Card.Root className="cart-shopping" maxW="sm" borderColor={'#aaaaaa'} >
               <form>
                 <Card.Body>
                   <Card.Title>Pedido</Card.Title>
@@ -134,31 +133,30 @@ function Order () {
                     </Text>
                     Itens
                     {pedido.itens.map((objeto) => (
-                      <Text textStyle="lg">
-                        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#${objeto.produto.nomeProduto}`}>
+                      <Text textStyle="lg" key={objeto.produto.nomeProduto}>
+                        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#${objeto.produto.nomeProduto}`} >
                           {objeto.produto.nomeProduto}
                         </button>
-                      </Text>
-                  ))}
-                    
-                     <div className="modal fade" id="Banana" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div className="modal-dialog">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div className="modal-body">
-
-                          </div>
-                          <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Save changes</button>
+                        <div className="modal fade" id={objeto.produto.nomeProduto} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                          <div className="modal-dialog">
+                            <div className="modal-content">
+                              <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">{objeto.produto.nomeProduto}</h1>
+                                <button type="button"  className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div className="modal-body">
+                                <img className="modal-img" src={`data:image/png;base64,${objeto.produto.image}`} />
+                                <h3>Quantidade: </h3>
+                                <h4>{objeto.quantidadeIten}</h4>
+                              </div>
+                              <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                    
+                      </Text>
+                    ))}
                     Valor
                     <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
                         R$ <FormatNumber value={pedido.valorTotalPedido} />
@@ -182,7 +180,7 @@ function Order () {
           Voltar
         </button>
         {activeStep === steps.length - 1 ? (
-          <button class="btn btn-primary" onClick={handleSubmit}>Enviar</button>
+          <button class="btn btn-primary" >Enviar</button>
         ) : (
           <button class="btn btn-primary" onClick={handleNext}>Próximo</button>
         )}
