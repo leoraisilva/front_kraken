@@ -25,7 +25,7 @@ function Header() {
                         <Link to="/kraken/register" className="nav-link">Register</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/kraken/" className="nav-link">Historico</Link>
+                        <Link to="/kraken/historic" className="nav-link">Historico</Link>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link disabled" aria-disabled="true">logout</a>

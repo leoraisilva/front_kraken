@@ -12,6 +12,7 @@ import Store from './components/body/register/Store'
 import RegisterCategory from './components/body/register/RegisterCategory';
 import Comprar from './components/body/list/Comprar';
 import Order from './components/body/pedido/order';
+import Historic from './components/body/historico/Historic';
 
 const ProtectedRoute = ({ children }) => {
   return (
@@ -34,7 +35,8 @@ const page = createBrowserRouter([
       { path: 'registro-categoria', element: <ProtectedRoute><RegisterCategory /></ProtectedRoute> },
       { path: 'produto/:produto', element: <ProtectedRoute><Comprar /></ProtectedRoute> },
       { path: 'store', element: <ProtectedRoute><Store /></ProtectedRoute> },
-      { path: 'order', element: <ProtectedRoute><Order /></ProtectedRoute>}
+      { path: 'order/:order', element: <ProtectedRoute><Order /></ProtectedRoute>},
+      { path: 'historic', element: <ProtectedRoute><Historic /></ProtectedRoute>}
     ]
   },
   { path: '/', element: <Login /> },

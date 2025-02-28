@@ -1,12 +1,18 @@
 import '../category.css';
 import React, { useState, useEffect } from 'react';
 import { Stepper, Step } from 'react-form-stepper';
-import { Button, Card, FormatNumber, Text  } from "@chakra-ui/react"
+import { useParams, useNavigate } from "react-router-dom";
+import { Card, FormatNumber, Text  } from "@chakra-ui/react"
+import Pagamento from './Pagamento';
+import Entrega from './Entrega';
+import Operacao from './Operacao';
 
 function Order () {
   const [activeStep, setActiveStep] = useState(0);
   const [error, setError] = useState('');
   const [pedido, setPedido] = useState([]);
+  const params = useParams("order/:pedidoId");
+  const navigate = useNavigate();
 
   const steps = [
     { label: 'Pagamento' },
@@ -22,12 +28,70 @@ function Order () {
     setActiveStep((prevStep) => prevStep - 1);
   };
 
+  const handleCancel = async (e) => {
+    e.preventDefault();
+    const itensMap = pedido.itens.map((index) => index.idItem )
+    const newPedido = {
+      statusPedido: "cancelado",
+      dataRegistro: pedido.dataRegistro,
+      valorTotalPedido: pedido.valorTotalPedido,
+      itens: itensMap
+    }
+    console.log(newPedido)
+    try{
+      const response = await fetch(`http://localhost:8084/pedido/${pedido.idPedido}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newPedido)
+      });
+      
+      if(!response.ok) {
+        throw new Error("Erro na atualização do pedido")
+      }
+      const result = await response.json();
+      navigate(`/kraken/historic`);
+    } catch (error) {
+        console.log("Erro no cadastro do pedido ou atualização dos itens", error);
+        setError(error);
+    }
+  }
+
+  const handleSend = async (f) => {
+    f.preventDefault()
+    const itensMap = pedido.itens.map((index) => index.idItem )
+    const newPedido = {
+      statusPedido: "andamento",
+      dataRegistro: pedido.dataRegistro,
+      valorTotalPedido: pedido.valorTotalPedido,
+      itens: itensMap
+    }
+    try{
+      const response = await fetch(`http://localhost:8084/pedido/${pedido.idPedido}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newPedido)
+      });
+      
+      if(!response.ok) {
+        throw new Error("Erro na atualização do pedido")
+      }
+      const result = await response.json();
+      navigate(`/kraken/historic`);
+    } catch (error) {
+        console.log("Erro no cadastro do pedido ou atualização dos itens", error);
+        setError(error);
+    }
+  }
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        
-        const res = await fetch(`http://localhost:8084/pedido`, {
+        const res = await fetch(`http://localhost:8084/pedido/${params.order}`, {
           method: 'GET',
           mode: 'cors'
         });
@@ -36,17 +100,10 @@ function Order () {
           throw new Error("Erro no carregamento de dados");
         }
   
-        const data = await res.json();
-        
-        const order = data.find(obj => obj.idPedido === '847038ff-7a10-4919-8d0f-3c1b1f8813eb');
-  
-        if (!order) {
-          throw new Error("Pedido não encontrado");
-        }
-        
+        const result = await res.json();
+
         const itensComDetalhes = await Promise.all(
-          order.itens.map(async (itemId) => {
-            
+          result.itens.map(async (itemId) => {
             const itemResponse = await fetch(`http://localhost:8085/itens/${itemId}`, {
               method: 'GET',
               mode: 'cors'
@@ -57,7 +114,7 @@ function Order () {
             }
   
             const item = await itemResponse.json();
-            
+
             const produtoResponse = await fetch(`http://localhost:8081/produto/${item.produto}`, {
               method: 'GET',
               mode: 'cors'
@@ -68,26 +125,22 @@ function Order () {
             }
   
             const produto = await produtoResponse.json();
-            
             return {
               ...item,
               produto: produto
             };
           })
         );
-        
         const pedidoCompleto = {
-          ...order,
+          ...result, 
           itens: itensComDetalhes
         };
-        
         setPedido(pedidoCompleto);
       } catch (error) {
         console.error("Erro no carregamento dos dados", error);
         setError(error);
       }
     };
-  
     fetchData();
   }, []);
 
@@ -100,24 +153,7 @@ function Order () {
       </Stepper>
       <div>
         {activeStep === 0 && (
-          <div>
-            <h2>Pagamento</h2>
-            <form class="row g-3 container-pay">
-                <div class="col-md-12">
-                    <label for="inputCity" class="form-label">Numero do Cartão</label>
-                    <input type="text" class="form-control"  />
-                </div>
-                <div class="col-md-3">
-                    <label for="inputCity"  class="form-label">Data</label>
-                    <input type="month" placeholder='MM/AA' class="form-control"  />
-                </div>
-                <div class="col-md-3">
-                    <label for="inputZip" class="form-label">Codigo de Seguranca</label>
-                    <input type="text" placeholder='***' class="form-control" />
-                    <br/>
-                </div>
-            </form>
-          </div>
+          <Pagamento />
         )}
         {activeStep === 1 && (
           <div>
@@ -133,31 +169,9 @@ function Order () {
                     </Text>
                     Itens
                     {pedido.itens.map((objeto) => (
-                      <Text textStyle="lg" key={objeto.produto.nomeProduto}>
-                        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#${objeto.produto.nomeProduto}`} >
-                          {objeto.produto.nomeProduto}
-                        </button>
-                        <div className="modal fade" id={objeto.produto.nomeProduto} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-                          <div className="modal-dialog">
-                            <div className="modal-content">
-                              <div className="modal-header">
-                                <h1 className="modal-title fs-5" id="exampleModalLabel">{objeto.produto.nomeProduto}</h1>
-                                <button type="button"  className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div className="modal-body">
-                                <img className="modal-img" src={`data:image/png;base64,${objeto.produto.image}`} />
-                                <h3>Quantidade: </h3>
-                                <h4>{objeto.quantidadeIten}</h4>
-                              </div>
-                              <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </Text>
+                      <Operacao produtoId={objeto.produto.produtoId} nomeProduto={objeto.produto.nomeProduto} image={objeto.produto.image} quantidadeIten={objeto.quantidadeIten} />
                     ))}
-                    Valor
+                    Valor da Compra
                     <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
                         R$ <FormatNumber value={pedido.valorTotalPedido} />
                     </Text>
@@ -168,22 +182,21 @@ function Order () {
           </div>
         )}
         {activeStep === 2 && (
-          <div>
-            <h2>Entrega</h2>
-            {/* referente ao pagamento */}
-          </div>
+          <Entrega frete={12} valor={pedido.valorTotalPedido} />
         )}
       </div>
 
       <div>
-        <button class="btn btn-secondary" onClick={handleBack} disabled={activeStep === 0}>
+        <button className="btn btn-secondary" onClick={handleBack} disabled={activeStep === 0}>
           Voltar
         </button>
+        <button className="btn btn-danger" onClick={handleCancel} >Cancelar</button>
         {activeStep === steps.length - 1 ? (
-          <button class="btn btn-primary" >Enviar</button>
+          <button className="btn btn-primary" onClick={handleSend} >Enviar</button>
         ) : (
-          <button class="btn btn-primary" onClick={handleNext}>Próximo</button>
+          <button className="btn btn-primary" onClick={handleNext}>Próximo</button>
         )}
+        
       </div>
     </div>
   );

@@ -117,8 +117,10 @@ function Checking() {
             if (!response.ok) {
                 throw new Error('Erro ao cadastrar Pedido');
             }
-    
+            
             const result = await response.json();
+            const pedidoId = result.idPedido; 
+    
             const updateItemsPromises = listaOrder.map(async (itemId) => {
                 const item = produto.find((obj) => obj.idItem === itemId);
                 
@@ -127,9 +129,9 @@ function Checking() {
                 }
     
                 const itemFormat = {
-                    quantidadeItem: item.quantidadeIten,
+                    quantidadeIten: item.quantidadeIten,
                     statusItem: 'alocado',
-                    valorItem: item.prodValor.valorUnitario*item.quantidadeIten,
+                    valorItem: item.prodValor.valorUnitario * item.quantidadeIten,
                     produto: item.prodValor.produtoId
                 };
                 console.log(itemFormat)
@@ -147,10 +149,9 @@ function Checking() {
     
                 return updateResponse.json(); 
             });
-    
             await Promise.all(updateItemsPromises);
     
-            navigate('/kraken/order');
+            navigate(`/kraken/order/${pedidoId}`);
             
         } catch (error) {
             console.log("Erro no cadastro do pedido ou atualização dos itens", error);
