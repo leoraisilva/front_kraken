@@ -1,4 +1,4 @@
-import "../category.css";
+import "../body.css";
 import { useEffect, useState } from "react";
 import Product from "./Product";
 
@@ -51,8 +51,8 @@ function List () {
                 <div className="row content-list">
                     <div className="col-4 list-product">
                         <div id="list-example" className="list-group">
-                        {categ.map((item, index) => (
-                            <a className="list-group-item list-group-item-action" href={"#"+item.categoriaId}>{item.titulo}</a>
+                        {categ.map((item) => (
+                            <a className="list-group-item list-group-item-action" href={`#${item.categoriaId}`}>{item.titulo}</a>
                         ))}
                         </div>
                     </div>

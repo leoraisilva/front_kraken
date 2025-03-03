@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../category.css';
+import "../body.css";
 import { useNavigate } from 'react-router-dom';
 
 function Store (){

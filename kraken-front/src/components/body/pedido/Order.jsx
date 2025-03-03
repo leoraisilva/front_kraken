@@ -1,4 +1,4 @@
-import '../category.css';
+import "../body.css";
 import React, { useState, useEffect } from 'react';
 import { Stepper, Step } from 'react-form-stepper';
 import { useParams, useNavigate } from "react-router-dom";

@@ -1,5 +1,5 @@
 import Item from './Item'; 
-import "../carousel.css";
+import "../body.css";
 import { useEffect, useState } from "react";
 import Pedido from './Pedido';
 import { useNavigate } from 'react-router-dom';

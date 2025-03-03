@@ -1,4 +1,4 @@
-import "../category.css";
+import "../body.css";
 import { NumberInputField, NumberInputRoot } from "../../ui/number-input"
 import { Button, Card, FormatNumber, Text  } from "@chakra-ui/react"
 import { useEffect, useState } from "react";

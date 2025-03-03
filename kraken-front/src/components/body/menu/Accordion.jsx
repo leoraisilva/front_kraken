@@ -1,4 +1,4 @@
-import "../category.css"
+import "../body.css";
 
   function Accordion() {
     return(

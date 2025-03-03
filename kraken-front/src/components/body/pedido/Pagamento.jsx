@@ -1,6 +1,4 @@
-import '../category.css';
-import { Stepper, Step } from 'react-form-stepper';
-import { Button, Card, FormatNumber, Text  } from "@chakra-ui/react"
+import "../body.css";
 
 
 function Pagamento () {

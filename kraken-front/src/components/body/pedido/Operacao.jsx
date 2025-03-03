@@ -1,5 +1,5 @@
-    import '../category.css';
-import { Button, Card, FormatNumber, Text  } from "@chakra-ui/react"
+import "../body.css";
+import { Text  } from "@chakra-ui/react"
 
 
 function Operacao ({ produtoId, nomeProduto, image, quantidadeIten}) {

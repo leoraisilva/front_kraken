@@ -1,18 +1,18 @@
-import "../carousel.css"
+import "../body.css";
 
 function Carousel({image1, image2, image3}) {
     return (
         <>
         <div id="carouselExample" className="carousel slide container-carousel">
           <div className="carousel-inner">
-          <div className="carousel-item ">
-            <img src={image1}  className="bd-placeholder-img bd-placeholder-img-lg d-block w-100 img-car" alt="Promoção" />
-          </div>
+            <div className="carousel-item ">
+              <img src={image1}  className="bd-placeholder-img bd-placeholder-img-lg d-block w-100 img-car" alt="Promoção" />
+            </div>
             <div className="carousel-item active">
-            <img src={image2}  className="bd-placeholder-img bd-placeholder-img-lg d-block w-100 img-car" alt="Promoção" />
+              <img src={image2}  className="bd-placeholder-img bd-placeholder-img-lg d-block w-100 img-car" alt="Promoção" />
             </div>
             <div className="carousel-item">
-            <img src={image3}  className="bd-placeholder-img bd-placeholder-img-lg d-block w-100 img-car" alt="Promoção" />
+              <img src={image3}  className="bd-placeholder-img bd-placeholder-img-lg d-block w-100 img-car" alt="Promoção" />
             </div>
           </div>
           <button className="carousel-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">

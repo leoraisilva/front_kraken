@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
-import "../category.css";
+import "../body.css";
 
 function Register () {
     const [categ, setCateg] = useState([]);

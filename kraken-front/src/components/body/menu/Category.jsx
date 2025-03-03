@@ -1,4 +1,4 @@
-import "../category.css";
+import "../body.css";
 import { Link } from 'react-router-dom';
 
 function Category ({image, title, text, url}) {

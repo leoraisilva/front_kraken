@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../category.css';
+import "../body.css";
 
 function RegisterCategory() {
     const [titulo, setTitulo] = useState('');
