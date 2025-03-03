@@ -131,7 +131,7 @@ function Checking() {
                 const itemFormat = {
                     quantidadeIten: item.quantidadeIten,
                     statusItem: 'alocado',
-                    valorItem: item.prodValor.valorUnitario * item.quantidadeIten,
+                    valorItem: item.prodValor.valorUnitario,
                     produto: item.prodValor.produtoId
                 };
                 console.log(itemFormat)
