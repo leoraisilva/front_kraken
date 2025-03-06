@@ -13,6 +13,7 @@ import RegisterCategory from './components/body/register/RegisterCategory';
 import Comprar from './components/body/list/Comprar';
 import Order from './components/body/pedido/order';
 import Historic from './components/body/historico/Historic';
+import Cadastrar from './components/login/Cadastrar';
 
 const ProtectedRoute = ({ children }) => {
   return (
@@ -40,6 +41,7 @@ const page = createBrowserRouter([
     ]
   },
   { path: '/', element: <Login /> },
+  { path: '/cadastro', element: <Cadastrar /> },
   { path: '/register', element: <Setting /> }, 
   { path: "*", element: <div>404 - Página não encontrada</div> }
 ]);

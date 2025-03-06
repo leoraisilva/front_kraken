@@ -28,7 +28,7 @@ function Header() {
                         <Link to="/kraken/historic" className="nav-link">Historico</Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link disabled" aria-disabled="true">logout</a>
+                        <Link to="/" className="nav-link">Logout</Link>
                     </li>
                 </ul>
                 <form className="d-flex" role="search">
