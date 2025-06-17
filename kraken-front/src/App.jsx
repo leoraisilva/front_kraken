@@ -11,7 +11,7 @@ import Login from '../src/components/login/Login';
 import Store from './components/body/register/Store'
 import RegisterCategory from './components/body/register/RegisterCategory';
 import Comprar from './components/body/list/Comprar';
-import Order from './components/body/pedido/order';
+import Order from './components/body/pedido/Order';
 import Historic from './components/body/historico/Historic';
 import Cadastrar from './components/login/Cadastrar';
 

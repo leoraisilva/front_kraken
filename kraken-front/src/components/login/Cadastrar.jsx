@@ -69,6 +69,22 @@ function Cadastrar () {
                 throw new Error(`Erro na requisição: ${response.status}`);
             }
             const result = await response.json()
+            const acesso = {
+                usuarioId : result.idCliente,
+                usuario : result.usuario,
+                rules: result.rules
+            }
+            try {
+                const resp = await fetch(`http://localhost:8080/cliente/auth/registry`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(acesso)
+                })
+            } catch (error) {
+                setError('Error 403: Problema ao cadastrar!!');
+            }
         }
         catch (error){
             setError('Error 403: Problema ao cadastrar. Tente novamente mais tarde');

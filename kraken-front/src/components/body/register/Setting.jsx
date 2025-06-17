@@ -12,7 +12,8 @@ function Setting () {
     const [email, setEmail] = useState('');
     const [tell, setTell] = useState('');
     const [cep, setCep] = useState('');
-    const [address, setAddress] = useState({})
+    const [rules, setRules] = useState('');
+    const [address, setAddress] = useState({});
     const [error, setError] = useState(null);
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
@@ -67,6 +68,7 @@ function Setting () {
                     setEmail(data.email || '');
                     setCep(data.cep || '');
                     setTell(data.tell || '');
+                    setRules(data.rules);
                 } catch (error) {
                     console.error('Erro ao carregar os dados', error);
                     setError('Erro tente novamente mais tarde');
@@ -90,7 +92,8 @@ function Setting () {
             email: email,
             tell: tell,
             cep: cep,
-            data: dataAtualizacao.toISOString()
+            data: dataAtualizacao.toISOString(),
+            rules: rules
         };
 
         try {
