@@ -10,7 +10,8 @@ function Cadastrar () {
     const [email, setEmail] = useState('');
     const [tell, setTell] = useState('');
     const [cep, setCep] = useState('');
-    const [address, setAddress] = useState({})
+    const [tipo, setTipo] = useState('');
+    const [address, setAddress] = useState({});
     const [error, setError] = useState(null);
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
@@ -53,9 +54,9 @@ function Cadastrar () {
             email: email,
             tell: tell,
             cep: cep,
-            data: dataAtualizacao.toISOString()
+            data: dataAtualizacao.toISOString(),
+            rules: tipo
         }
-        console.log(client)
         try {
             const response = await fetch(`http://localhost:8080/cliente`, {
                 method: 'POST',
@@ -131,6 +132,14 @@ function Cadastrar () {
                     <label for="inputZip" class="form-label">Tell</label>
                     <input type="text" class="form-control" value={tell} onChange={(e) => setTell(e.target.value)} />
                     <br/>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="validationFormCheck2" name="tipo" value="USER" checked= {tipo == "USER"} onChange={(e) => setTipo(e.target.value)} required />
+                    <label class="form-check-label" for="validationFormCheck2">Comprador</label>
+                </div>
+                <div class="form-check mb-3">
+                    <input type="radio" class="form-check-input" id="validationFormCheck3" name="tipo" value="ADMIN" checked= {tipo == "ADMIN"} onChange={(e) => setTipo(e.target.value)} required />
+                    <label class="form-check-label" for="validationFormCheck3">Vendedor</label>
                 </div>
                 <div class="col-6">
                     <button type="submit" class="btn btn-primary">Cadastrar</button>

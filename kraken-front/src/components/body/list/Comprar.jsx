@@ -16,55 +16,52 @@ function Comprar(){
     const navigate = useNavigate();
 
     useEffect(() => {
-        
-            fetch(`http://localhost:8081/produto/${params.produto}`, {
-                method: 'GET',
-                mode: 'cors'
-            })
-            .then(res => {
-                if(!res.ok)
-                    throw new Error("Erro no carregamento dos dados");
-                return res.json();
-            })
-            .then(data => {
+        const fetchProduto = async () => {
+            try {
+                const data = await authFetch(`http://localhost:8081/produto/${params.produto}`, {
+                    method: 'GET',
+                    mode: 'cors',
+                });
+
                 setNome(data.nomeProduto);
                 setImage(data.image);
                 setDescricao(data.descricao);
                 setValor(data.valorUnitario);
                 setQuantidade(data.quantidadeProduto);
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error("erro ao carregar os dados", error);
-                setError("Erro no carregamento, tente novamente mais tarde")
-            })
-        }, [params]);
+                setError("Erro no carregamento, tente novamente mais tarde");
+            }
+        };
 
-    const handleSubmitCompra = async (ev) =>{
+        fetchProduto();
+    }, [params]);
+
+    const handleSubmitCompra = async (ev) => {
         ev.preventDefault();
+
         const itemForm = {
             quantidadeIten: item,
             statusItem: 'pendente',
             valorItem: valor,
             produto: params.produto
-        }
+        };
+
         try {
-            const resp = await fetch (`http://localhost:8085/itens`, {
+            const result = await authFetch(`http://localhost:8085/itens`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(itemForm)
-            })
-            if(!resp.ok)
-                throw new Error("Erro no cadastro")
-            const result = await resp.json( )
+                mode: 'cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(itemForm),
+            });
 
         } catch (error) {
             setError('Erro no cadastro do Item');
             console.error(error);
         }
-        navigate('/kraken/checking'); 
-    }
+
+        navigate('/kraken/checking');
+    };
 
     const handleIncrementCompra = () => {
         const newQntd = item + 1;

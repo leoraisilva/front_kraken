@@ -13,48 +13,41 @@ function Checking() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:8085/itens`, {
-            method: 'GET',
-            mode: 'cors'
-        })
-        .then(res => {
-            if(!res.ok) {
-                throw new Error("Erro ao carregar os dados");
-            }
-            return res.json()
-        })
-        .then(data => {
-            const produtoItem = data.filter((valor) => valor.statusItem === "pendente").map(valor =>
-                fetch(`http://localhost:8081/produto/${valor.produto}`, {
-                    method: 'GET',
-                    mode: 'cors'
-                })
-                .then(response => {
-                    if(!response.ok)
-                        throw new Error("valor não encontrado");
-                    return response.json();
-                })
-                .then(product => ({ ...valor, prodValor: product}))
-                .catch(error => {
-                    console.error("erro no carregamento do produto", error);
-                    setError(error);
-                })
+    const fetchData = async () => {
+        try {
+            const data = await authFetch('http://localhost:8085/itens', {
+                method: 'GET',
+                mode: 'cors',
+            });
+
+            const produtoItem = await Promise.all(
+                data
+                    .filter(valor => valor.statusItem === 'pendente')
+                    .map(async (valor) => {
+                        try {
+                            const product = await authFetch(`http://localhost:8081/produto/${valor.produto}`, {
+                                method: 'GET',
+                                mode: 'cors',
+                            });
+                            return { ...valor, prodValor: product };
+                        } catch (error) {
+                            console.error('Erro no carregamento do produto', error);
+                            setError(error);
+                            return null; 
+                        }
+                    })
             );
-            Promise.all(produtoItem)
-            .then(product => {
-                const validoProduto = product.filter(entidade => entidade !== null);
-                setProduto(validoProduto);
-            })
-            .catch(error => {
-                console.error("erro no carregamento validação do produto", error);
-                setError(error);
-            })
-        })
-        .catch(error => {
-            console.error("erro no carregamento item", error);
+
+            const validoProduto = produtoItem.filter(entidade => entidade !== null);
+            setProduto(validoProduto);
+        } catch (error) {
+            console.error('Erro no carregamento item', error);
             setError(error);
-        })
-    }, []);
+        }
+    };
+
+    fetchData();
+}, []);
 
     useEffect(() => {
         const ids = produto.map(entidade => entidade.idItem);

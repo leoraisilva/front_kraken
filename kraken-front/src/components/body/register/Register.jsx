@@ -15,52 +15,42 @@ function Register () {
     const [quantidadeProduto, setQuantidadeProduto] = useState('');
     const [image, setImage] = useState(null);
     
-    useEffect(()=> {
-        fetch(`http://localhost:8083/categoria`, {
-            method: 'GET',
-            mode: 'cors'
-        })
-        .then(res => {
-            if(!res.ok)
-                throw new Error("erro ao inicializar");
-            return res.json()
-        })
-        .then(data=>{
-            setCateg(data);
-        })
-        .catch(error=>{
-            console.error("erro ao carregar page", error);
-            setError("Erro na leitura dos dados");
-        })
+    useEffect(() => {
+        const fetchCategorias = async () => {
+            try {
+                const data = await authFetch(`http://localhost:8083/categoria`);
+                setCateg(data);
+            } catch (error) {
+                console.error("erro ao carregar page", error);
+                setError("Erro na leitura dos dados");
+            }
+        };
+
+        fetchCategorias();
     }, []);
 
     useEffect(() => {
-        fetch(`http://localhost:8082/estoque`, {
-            method: 'GET',
-            mode: 'cors'
-        })
-        .then(res => {
-            if(!res.ok)
-                throw new Error("Erro ao inicializar")
-            return res.json()
-        })
-        .then(data=> {
-            setStore(data);
-        })
-        .catch(error => {
-            console.error("Erro ao iniciar o dados", error);
-            setError("Erro na leitura dos dados");
-        })
+        const fetchEstoque = async () => {
+            try {
+                const data = await authFetch(`http://localhost:8082/estoque`);
+                setStore(data);
+            } catch (error) {
+                console.error("Erro ao iniciar os dados", error);
+                setError("Erro na leitura dos dados");
+            }
+        };
+
+        fetchEstoque();
     }, []);
 
     const handleProductRegister = async (k) => {
         k.preventDefault();
-    
+
         if (!nomeProduto || !descricao || !categoriaId || !valorUnitario || !estoqueid || !quantidadeProduto || !image) {
             setError("Todos os campos são obrigatórios.");
             return;
         }
-    
+
         const formData = new FormData();
         formData.append('nomeProduto', nomeProduto);
         formData.append('descricao', descricao);
@@ -69,15 +59,21 @@ function Register () {
         formData.append('estoqueId', estoqueid);
         formData.append('quantidadeProduto', quantidadeProduto);
         formData.append('image', image);
-    
+
         try {
+            const token = localStorage.getItem('token');
+            if (!token) throw new Error('Token JWT não encontrado');
+
             const response = await fetch(`http://localhost:8081/produto`, {
                 method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}` 
+                },
                 body: formData
             });
-    
+
             if (!response.ok) throw new Error(`Erro na requisição ${response.status}`);
-    
+
             const result = await response.json();
             navigate('/kraken/');
         } catch (error) {

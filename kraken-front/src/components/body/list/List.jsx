@@ -8,41 +8,37 @@ function List () {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        fetch(`http://localhost:8083/categoria`, {
-            method: 'GET',
-            mode: 'cors'
-        })
-        .then(res=>{
-            if(!res.ok)
-                throw new Error("Erro ao inicializar");
-            return res.json()
-        })
-        .then(data => {
-            setCateg(data)
-        })
-        .catch(error => {
-            console.error("erro ao carregar os dados", error);
-            setError("Erro no carregamento, tente novamente mais tarde")
-        })
+        const fetchCategoria = async () => {
+            try {
+                const data = await authFetch('http://localhost:8083/categoria', {
+                    method: 'GET',
+                    mode: 'cors',
+                });
+                setCateg(data);
+            } catch (error) {
+                console.error("erro ao carregar os dados", error);
+                setError("Erro no carregamento, tente novamente mais tarde");
+            }
+        };
+
+        fetchCategoria();
     }, []);
 
     useEffect(() => {
-        fetch(`http://localhost:8081/produto`, {
-            method: 'GET',
-            mode: 'cors'
-        })
-        .then(res => {
-            if(!res.ok)
-                throw new Error("Erro no carregamento dos dados");
-            return res.json();
-        })
-        .then(data => {
-            setProduto(data);
-        })
-        .catch(error => {
-            console.error("erro ao carregar os dados", error);
-            setError("Erro no carregamento, tente novamente mais tarde")
-        })
+        const fetchProduto = async () => {
+            try {
+                const data = await authFetch('http://localhost:8081/produto', {
+                    method: 'GET',
+                    mode: 'cors',
+                });
+                setProduto(data);
+            } catch (error) {
+                console.error("erro ao carregar os dados", error);
+                setError("Erro no carregamento, tente novamente mais tarde");
+            }
+        };
+
+        fetchProduto();
     }, []);
 
     return (

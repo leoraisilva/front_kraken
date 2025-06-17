@@ -14,67 +14,51 @@ function Historic () {
     };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await fetch(`http://localhost:8084/pedido`, {
-                    method: 'GET',
-                    mode: 'cors'
+    const fetchData = async () => {
+        try {
+            const data = await authFetch('http://localhost:8084/pedido', {
+                method: 'GET',
+                mode: 'cors',
+            });
+
+            const productPromises = data.map(async (valor) => {
+                const itemPromises = valor.itens.map(async (item) => {
+                    try {
+                        const prod = await authFetch(`http://localhost:8085/itens/${item}`, {
+                            method: 'GET',
+                            mode: 'cors',
+                        });
+
+                        const result = await authFetch(`http://localhost:8081/produto/${prod.produto}`, {
+                            method: 'GET',
+                            mode: 'cors',
+                        });
+
+                        return { prod, prodValue: result };
+                    } catch (error) {
+                        console.error("Erro no carregamento ou validação do produto", error);
+                        return null;
+                    }
                 });
-    
-                if (!res.ok) {
-                    throw new Error('Erro ao carregar os dados do pedido');
-                }
-    
-                const data = await res.json();
-    
-                const productPromises = data.map(async (valor) => {
-                    const itemPromises = valor.itens.map(async (item) => {
-                        try {
-                            const resp = await fetch(`http://localhost:8085/itens/${item}`, {
-                                method: 'GET',
-                                mode: 'cors'
-                            });
-                            if (!resp.ok) {
-                                throw new Error('Erro ao carregar os dados do item');
-                            }
-    
-                            const prod = await resp.json();
-                            
-                            const response = await fetch(`http://localhost:8081/produto/${prod.produto}`, {
-                                method: 'GET',
-                                mode: 'cors'
-                            });
-    
-                            if (!response.ok) {
-                                throw new Error('Erro ao carregar os dados do produto');
-                            }
-    
-                            const result = await response.json();
-                            return { prod, prodValue: result };
-                        } catch (error) {
-                            console.error("Erro no carregamento ou validação do produto", error);
-                            return null;
-                        }
-                    });
-    
-                    const itemContent = await Promise.all(itemPromises);
-                    return {
-                        ...valor,
-                        itemContent: itemContent.filter(item => item !== null)
-                    };
-                });
-    
-                const valuePedido = await Promise.all(productPromises);
-                const valid = valuePedido.filter(entidade => entidade !== null);
-                setPedido(valid);
-            } catch (error) {
-                console.error('Erro ao acessar os dados do pedido', error);
-                setError(error);
-            }
-        };
-    
-        fetchData();
-    }, []);
+
+                const itemContent = await Promise.all(itemPromises);
+                return {
+                    ...valor,
+                    itemContent: itemContent.filter(item => item !== null),
+                };
+            });
+
+            const valuePedido = await Promise.all(productPromises);
+            const valid = valuePedido.filter(entidade => entidade !== null);
+            setPedido(valid);
+        } catch (error) {
+            console.error('Erro ao acessar os dados do pedido', error);
+            setError(error);
+        }
+    };
+
+    fetchData();
+}, []);
 
     return (
         <>

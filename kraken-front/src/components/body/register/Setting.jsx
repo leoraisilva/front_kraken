@@ -41,31 +41,41 @@ function Setting () {
 
     useEffect(() => {
         if (id_cliente) {
-            fetch(`http://localhost:8080/cliente/${id_cliente}`, {
-                method: 'GET',
-                mode: 'cors'
-            })
-            .then(res =>{
-                if(!res.ok) {
-                    throw new Error('Falha na busca de dados');
+            const fetchCliente = async () => {
+                try {
+                    const token = localStorage.getItem('token');
+                    if (!token) throw new Error('Token JWT não encontrado');
+
+                    const res = await fetch(`http://localhost:8080/cliente/${id_cliente}`, {
+                        method: 'GET',
+                        mode: 'cors',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!res.ok) {
+                        throw new Error('Falha na busca de dados');
+                    }
+
+                    const data = await res.json();
+
+                    setUsuario(data.usuario || '');
+                    setSenha(data.senha || '');
+                    setNome(data.nome || '');
+                    setEmail(data.email || '');
+                    setCep(data.cep || '');
+                    setTell(data.tell || '');
+                } catch (error) {
+                    console.error('Erro ao carregar os dados', error);
+                    setError('Erro tente novamente mais tarde');
                 }
-                return res.json();
-            })
-            .then(data => {
-                setUsuario(data.usuario || '');
-                setSenha(data.senha || '');
-                setNome(data.nome || '');
-                setEmail(data.email || '');
-                setCep(data.cep || '');
-                setTell(data.tell || '');
-            })
-            .catch (error => {
-                console.error('Erro ao carregar os dados', error);
-                setError('Erro tente novamente mais tarde');
-            });
-        }
-        else {
-            setError('Id nao Localizado');
+            };
+
+            fetchCliente();
+        } else {
+            setError('Id não localizado');
         }
     }, [id_cliente]);
 
@@ -81,45 +91,58 @@ function Setting () {
             tell: tell,
             cep: cep,
             data: dataAtualizacao.toISOString()
-        }
+        };
+
         try {
+            const token = localStorage.getItem('token');
+            if (!token) throw new Error('Token não encontrado');
+
             const response = await fetch(`http://localhost:8080/cliente/${id_cliente}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(client)
-            })
-            if(!response.ok){
+            });
+
+            if (!response.ok) {
                 throw new Error(`Erro na requisição: ${response.status}`);
             }
-            const result = await response.json()
-        }
-        catch (error){
+
+            const result = await response.json();
+            navigate('/kraken/');
+        } catch (error) {
+            console.error("Erro ao atualizar cliente:", error);
             setError('Error 403: Problema ao cadastrar. Tente novamente mais tarde');
         }
-        navigate ('/kraken/');
-    }
+    };
 
     const handleDelet = async (f) => {
         f.preventDefault();
 
         try {
+            const token = localStorage.getItem('token');
+            if (!token) throw new Error('Token não encontrado');
+
             const response = await fetch(`http://localhost:8080/cliente/${id_cliente}`, {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 }
-            })
-            if(!response.ok) {
+            });
+
+            if (!response.ok) {
                 throw new Error(`Erro na requisição: ${response.status}`);
             }
-            const result = await response.json()
+            const result = await response.json();
         }
-        catch (error){
+        catch (error) {
             setError('Error 403: Problema ao cadastrar. Tente novamente mais tarde');
+            console.error(error);
         }
-        navigate ('/');
+        navigate('/');
     }
 
     return (

@@ -12,34 +12,30 @@ function Store (){
     const navigate = useNavigate();
 
     const handleStore = async (h) => {
-        h.preventDefault()
+    h.preventDefault();
 
-        const store = {
-            nomeEstoque: nome,
-            valorMinimo: minimo,
-            valorMaximo: maximo,
-            quantidadeProduto: quantidade,
-            descricao: descricao
-        }
+    const store = {
+        nomeEstoque: nome,
+        valorMinimo: minimo,
+        valorMaximo: maximo,
+        quantidadeProduto: quantidade,
+        descricao: descricao
+    };
 
-        try{
-            const response = await fetch(`http://localhost:8082/estoque`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(store)
-            })
-            if(!response.ok)
-                throw new Error("Erro ao tentar cadastrar")
-            const result = await response.json()
-            
-        }catch (error) {
-            setError("Erro ao cadastrar");
-            console.error(error)
-        }
-        navigate('/kraken/'); 
+    try {
+        const result = await authFetch(`http://localhost:8082/estoque`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(store)
+        });
+    } catch (error) {
+        setError("Erro ao cadastrar");
+        console.error(error);
     }
+    navigate('/kraken/');
+};
 
 
     return (

@@ -1,49 +1,47 @@
 import { Link, useNavigate } from 'react-router-dom';
 import './login.css'
+import { authFetch } from './AuthFetch'
 import { useEffect, useState } from 'react';
 
 
     function Login () {
-        const [clients, setClients] = useState([]); 
-        const [error, setError] = useState(''); 
-        const navigate = useNavigate(); 
-
-        useEffect(() => {
-            fetch('http://localhost:8080/cliente', {
-                method: 'GET',
-                mode: 'cors'
-            })
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error('Falha ao buscar dados dos usuários');
-                }
-                return res.json();
-            })
-            .then(data => {
-                setClients(data); 
-            })
-            .catch(error => {
-                console.error('Erro ao carregar dados dos clientes:', error);
-                setError('Erro ao carregar dados, tente novamente.');
-            });
-        }, []);
+        const [error, setError] = useState('');
+        const navigate = useNavigate();
     
-        const handleLogin = (e) => {
+        const handleLogin = async (e) => {
             e.preventDefault();
             const usuario = document.getElementById('user').value;
             const senha = document.getElementById('pass').value;
-    
-            
-            const user = clients.find(client => client.usuario === usuario && client.senha === senha);
-    
-            if (user) {
-                localStorage.setItem('token', 'fake-jwt-token'); 
-                localStorage.setItem('userId', user.idCliente);
-                navigate('/kraken/');
-            } else {
-                setError('Usuário ou senha incorretos.');
+
+            try {
+                const res = await fetch('http://localhost:8080/cliente/auth/login', {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ usuario, senha })
+                });
+
+                if (!res.ok) throw new Error('Usuário ou senha incorretos');
+
+                const { token } = await res.json();
+
+                localStorage.setItem('token', token);
+
+                const clientes = await authFetch('http://localhost:8080/cliente');
+                const user = clientes.find(c => c.usuario === usuario);
+
+                if (user) {
+                    localStorage.setItem('userId', user.idCliente);
+                    navigate('/kraken/');
+                } else {
+                    setError('Usuário não encontrado nos dados dos clientes.');
+                }
+            } catch (err) {
+                console.error(err);
+                setError(err.message || 'Erro ao tentar logar.');
             }
         };
+
     return (
         <>
         <div>

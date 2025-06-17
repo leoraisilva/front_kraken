@@ -29,120 +29,93 @@ function Order () {
   };
 
   const handleCancel = async (e) => {
-    e.preventDefault();
-    const itensMap = pedido.itens.map((index) => index.idItem )
-    const newPedido = {
-      statusPedido: "cancelado",
-      dataRegistro: pedido.dataRegistro,
-      valorTotalPedido: pedido.valorTotalPedido,
-      itens: itensMap
-    }
-    console.log(newPedido)
-    try{
-      const response = await fetch(`http://localhost:8084/pedido/${pedido.idPedido}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newPedido)
-      });
-      
-      if(!response.ok) {
-        throw new Error("Erro na atualização do pedido")
+      e.preventDefault();
+
+      const itensMap = pedido.itens.map((index) => index.idItem);
+      const newPedido = {
+          statusPedido: "cancelado",
+          dataRegistro: pedido.dataRegistro,
+          valorTotalPedido: pedido.valorTotalPedido,
+          itens: itensMap
+      };
+
+      try {
+          const result = await authFetch(`http://localhost:8084/pedido/${pedido.idPedido}`, {
+              method: 'PUT',
+              mode: 'cors',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(newPedido)
+          });
+
+          navigate(`/kraken/historic`);
+      } catch (error) {
+          console.error("Erro no cadastro do pedido ou atualização dos itens", error);
+          setError("Erro ao cancelar o pedido. Tente novamente.");
       }
-      const result = await response.json();
-      navigate(`/kraken/historic`);
-    } catch (error) {
-        console.log("Erro no cadastro do pedido ou atualização dos itens", error);
-        setError(error);
-    }
-  }
+  };
 
   const handleSend = async (f) => {
-    f.preventDefault()
-    const itensMap = pedido.itens.map((index) => index.idItem )
+    f.preventDefault();
+
+    const itensMap = pedido.itens.map((index) => index.idItem);
     const newPedido = {
-      statusPedido: "andamento",
-      dataRegistro: pedido.dataRegistro,
-      valorTotalPedido: pedido.valorTotalPedido,
-      itens: itensMap
-    }
-    try{
-      const response = await fetch(`http://localhost:8084/pedido/${pedido.idPedido}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newPedido)
-      });
-      
-      if(!response.ok) {
-        throw new Error("Erro na atualização do pedido")
-      }
-      const result = await response.json();
-      navigate(`/kraken/historic`);
+        statusPedido: "andamento",
+        dataRegistro: pedido.dataRegistro,
+        valorTotalPedido: pedido.valorTotalPedido,
+        itens: itensMap
+    };
+
+    try {
+        const result = await authFetch(`http://localhost:8084/pedido/${pedido.idPedido}`, {
+            method: 'PUT',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newPedido)
+        });
+
+        navigate(`/kraken/historic`);
     } catch (error) {
         console.log("Erro no cadastro do pedido ou atualização dos itens", error);
-        setError(error);
+        setError("Erro ao enviar o pedido. Tente novamente.");
     }
-  }
+};
 
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`http://localhost:8084/pedido/${params.order}`, {
-          method: 'GET',
-          mode: 'cors'
-        });
   
-        if (!res.ok) {
-          throw new Error("Erro no carregamento de dados");
-        }
-  
-        const result = await res.json();
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const result = await authFetch(`http://localhost:8084/pedido/${params.order}`);
 
-        const itensComDetalhes = await Promise.all(
-          result.itens.map(async (itemId) => {
-            const itemResponse = await fetch(`http://localhost:8085/itens/${itemId}`, {
-              method: 'GET',
-              mode: 'cors'
-            });
-  
-            if (!itemResponse.ok) {
-              throw new Error(`Erro na leitura do item ${itemId}`);
-            }
-  
-            const item = await itemResponse.json();
+      const itensComDetalhes = await Promise.all(
+        result.itens.map(async (itemId) => {
+          const item = await authFetch(`http://localhost:8085/itens/${itemId}`);
+          const produto = await authFetch(`http://localhost:8081/produto/${item.produto}`);
+          return {
+            ...item,
+            produto: produto
+          };
+        })
+      );
 
-            const produtoResponse = await fetch(`http://localhost:8081/produto/${item.produto}`, {
-              method: 'GET',
-              mode: 'cors'
-            });
-  
-            if (!produtoResponse.ok) {
-              throw new Error(`Erro na leitura do produto ${item.produto}`);
-            }
-  
-            const produto = await produtoResponse.json();
-            return {
-              ...item,
-              produto: produto
-            };
-          })
-        );
-        const pedidoCompleto = {
-          ...result, 
-          itens: itensComDetalhes
-        };
-        setPedido(pedidoCompleto);
-      } catch (error) {
-        console.error("Erro no carregamento dos dados", error);
-        setError(error);
-      }
-    };
-    fetchData();
-  }, []);
+      const pedidoCompleto = {
+        ...result,
+        itens: itensComDetalhes
+      };
+
+      setPedido(pedidoCompleto);
+    } catch (error) {
+      console.error("Erro no carregamento dos dados", error);
+      setError(error.message || "Erro inesperado");
+    }
+  };
+
+  fetchData();
+}, [params.order]);
 
   return (
     <div className='content-step'>

@@ -6,24 +6,23 @@ import { useState } from "react";
 function Catalog() {
     const [categ, setCateg] = useState([])
     const [error, setError] = useState('')
-    useEffect(() =>{
-        fetch(`http://localhost:8083/categoria`, {
-            method: 'GET',
-            mode: 'cors'
-        })
-        .then(res => {
-            if(!res.ok)
-                throw new Error("Erro na requisição")
-            return res.json();
-        })
-        .then(data => {
-            setCateg(data);
-        })
-        .catch(error => {
-            console.error("erro ao carregar os dados", error);
-            setError("Erro no carregamento, tente novamente mais tarde")
-        })
-    }, [])
+    
+    useEffect(() => {
+        const fetchCategoria = async () => {
+            try {
+                const data = await authFetch('http://localhost:8083/categoria', {
+                    method: 'GET',
+                    mode: 'cors',
+                });
+                setCateg(data);
+            } catch (error) {
+                console.error("erro ao carregar os dados", error);
+                setError("Erro no carregamento, tente novamente mais tarde");
+            }
+        };
+
+        fetchCategoria();
+    }, []);
 
     return (
         <>
