@@ -1,6 +1,7 @@
 import "../body.css";
 import React, { useState, useEffect } from 'react';
 import { Stepper, Step } from 'react-form-stepper';
+import { authFetch } from "../../login/AuthFetch";
 import { useParams, useNavigate } from "react-router-dom";
 import { Card, FormatNumber, Text  } from "@chakra-ui/react"
 import Pagamento from './Pagamento';

@@ -1,6 +1,7 @@
 import Item from './Item'; 
 import "../body.css";
 import { useEffect, useState } from "react";
+import { authFetch } from '../../login/AuthFetch';
 import Pedido from './Pedido';
 import { useNavigate } from 'react-router-dom';
 
@@ -64,13 +65,13 @@ function Checking() {
 
     const handleDeleteItem = async (idItem) => {
         try {
-            const response = await fetch(`http://localhost:8085/itens/${idItem}`, {
+            const response = await authFetch(`http://localhost:8085/itens/${idItem}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
-            if(!response.ok) {
+            if(!response.ok) {  
                 throw new Error("erro ao deletar a entidade");
             }
         } catch (error) {
@@ -91,65 +92,46 @@ function Checking() {
     };
 
     const handleSubmitOrder = async (evo) => {
-        evo.preventDefault();
-        const order = {
-            statusPedido: 'aguardando',
-            valorTotalPedido: valor,
-            itens: listaOrder
-        }
-    
-        try {
-            const response = await fetch(`http://localhost:8084/pedido`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(order)
+    evo.preventDefault();
+    const order = {
+        statusPedido: 'aguardando',
+        valorTotalPedido: valor,
+        itens: listaOrder
+    }
+
+    try {
+        const result = await authFetch(`http://localhost:8084/pedido`, {
+            method: 'POST',
+            body: JSON.stringify(order)
+        });
+
+        const pedidoId = result.idPedido;
+
+        const updateItemsPromises = listaOrder.map(async (itemId) => {
+            const item = produto.find((obj) => obj.idItem === itemId);
+            if (!item) throw new Error(`Item com ID ${itemId} não encontrado`);
+
+            const itemFormat = {
+                quantidadeIten: item.quantidadeIten,
+                statusItem: 'alocado',
+                valorItem: item.prodValor.valorUnitario,
+                produto: item.prodValor.produtoId
+            };
+
+            await authFetch(`http://localhost:8085/itens/${item.idItem}`, {
+                method: 'PUT',
+                body: JSON.stringify(itemFormat)
             });
-    
-            if (!response.ok) {
-                throw new Error('Erro ao cadastrar Pedido');
-            }
-            
-            const result = await response.json();
-            const pedidoId = result.idPedido; 
-    
-            const updateItemsPromises = listaOrder.map(async (itemId) => {
-                const item = produto.find((obj) => obj.idItem === itemId);
-                
-                if (!item) {
-                    throw new Error(`Item com ID ${itemId} não encontrado`);
-                }
-    
-                const itemFormat = {
-                    quantidadeIten: item.quantidadeIten,
-                    statusItem: 'alocado',
-                    valorItem: item.prodValor.valorUnitario,
-                    produto: item.prodValor.produtoId
-                };
-                console.log(itemFormat)
-                const updateResponse = await fetch(`http://localhost:8085/itens/${item.idItem}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(itemFormat)
-                });
-    
-                if (!updateResponse.ok) {
-                    throw new Error(`Erro na atualização do item com ID ${item.idItem}`);
-                }
-    
-                return updateResponse.json(); 
-            });
-            await Promise.all(updateItemsPromises);
-    
-            navigate(`/kraken/order/${pedidoId}`);
-            
-        } catch (error) {
-            console.log("Erro no cadastro do pedido ou atualização dos itens", error);
-            setError(error);
-        }
+        });
+
+        await Promise.all(updateItemsPromises);
+        navigate(`/kraken/order/${pedidoId}`);
+
+    } catch (error) {
+        console.log("Erro no cadastro do pedido ou atualização dos itens", error);
+        setError(error);
+    }
+
     };
     
 

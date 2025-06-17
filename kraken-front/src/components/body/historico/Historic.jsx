@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../body.css';
+import { authFetch } from '../../login/AuthFetch';
 
 function Historic () {
     const [pedido, setPedido] = useState([]);

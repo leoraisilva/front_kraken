@@ -86,7 +86,7 @@ function Register () {
     return (
         <>
         <div className="container-setting">
-            <h2>Cadastrar</h2>
+            <h2>Cadastrar Produto</h2>
             <form className="row g-3" onSubmit={handleProductRegister}>
                 <div className="col-12">
                     <label className="form-label">Nome do Produto</label>

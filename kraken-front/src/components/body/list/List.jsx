@@ -1,5 +1,6 @@
 import "../body.css";
 import { useEffect, useState } from "react";
+import { authFetch } from "../../login/AuthFetch"
 import Product from "./Product";
 
 function List () {

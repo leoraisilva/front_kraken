@@ -43,8 +43,8 @@ function Pedido({valor, submitOrder}) {
                             </Text>
                         </Card.Body>
                         <Card.Footer gap="2">
-                            <Button variant="solid" padding={2} borderRadius={8} onClick={submitOrder}  >Buy now</Button>
-                            <Button variant="ghost"><Link to="/kraken/list" className="nav-link">Add to cart</Link></Button>
+                            <Button variant="solid" padding={2} borderRadius={8} onClick={submitOrder} >Comprar</Button>
+                            <Button variant="ghost"><Link to="/kraken/list" className="nav-link">Add carrinho</Link></Button>
                         </Card.Footer>
                     </form>
                 </Card.Root>

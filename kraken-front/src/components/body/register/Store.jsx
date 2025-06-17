@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import "../body.css";
+import { authFetch } from '../../login/AuthFetch';
 import { useNavigate } from 'react-router-dom';
 
 function Store (){
@@ -41,7 +42,7 @@ function Store (){
     return (
         <>
         <div className="container-setting">
-            <h2>Cadastro Estoque</h2>
+            <h2>Registrar Estoque</h2>
             <form className="row g-3" onSubmit={handleStore}>
                 <div className="col-12">
                     <label className="form-label">Nome do Estoque</label>

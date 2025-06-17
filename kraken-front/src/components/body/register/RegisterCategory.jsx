@@ -39,7 +39,7 @@ function RegisterCategory() {
     return (
         <>
             <div className="container-setting">
-                <h2>Cadastro Categoria</h2>
+                <h2>Registrar Categoria</h2>
                 {error && <p className="error-message">{error}</p>}
                 <form className="row g-3" onSubmit={handleRegister}>
                     <div className="col-12">

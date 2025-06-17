@@ -1,6 +1,7 @@
 import "../body.css";
 import { NumberInputField, NumberInputRoot } from "../../ui/number-input"
 import { Box, Button, Card, HStack, Image, FormatNumber, Text } from "@chakra-ui/react"
+
 function Item ({idItem, title, imagem, unitValue, qntd, onQntdChange, handleDelete, max, total}) {
     const handleIncrement = () => {
         const newQntd = qntd + 1;

@@ -62,18 +62,18 @@ function Header() {
                         {cliente.rules == 'ADMIN' ? <Link to="/kraken/register" className="nav-link">Cadastrar Produto</Link> : <Link to="/kraken/checking" className="nav-link">Checking</Link>}
                     </li>
                     <li className="nav-item">
-                        {cliente.rules == 'ADMIN' ? <Link to="/kraken/store" className="nav-link">Cadastrar Estoque</Link> : <Link to="/kraken/historic" className="nav-link">Historico</Link>}
+                        {cliente.rules == 'ADMIN' ? <Link to="/kraken/store" className="nav-link">Registrar Estoque</Link> : <Link to="/kraken/historic" className="nav-link">Historico</Link>}
                     </li>
                     <li className="nav-item">
-                        {cliente.rules == 'ADMIN' ? <Link to="/kraken/registro-categoria" className="nav-link">Cadastrar Categoria</Link> : <></>}
+                        {cliente.rules == 'ADMIN' ? <Link to="/kraken/registro-categoria" className="nav-link">Registrar Categoria</Link> : <></>}
                     </li>
                     <li className="nav-item">
-                        <Link to="/" className="nav-link">Logout</Link>
+                        <Link to="/" className="nav-link">Sair</Link>
                     </li>
                 </ul>
                 <form className="d-flex" role="search">
-                    <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button className="btn btn-outline-success" type="submit">Search</button>
+                    <input className="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" />
+                    <button className="btn btn-outline-success" type="submit">Buscar</button>
                 </form>
                 </div>
             </div>

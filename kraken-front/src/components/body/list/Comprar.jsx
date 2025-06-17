@@ -1,6 +1,7 @@
 import "../body.css";
 import { NumberInputField, NumberInputRoot } from "../../ui/number-input"
 import { Button, Card, FormatNumber, Text  } from "@chakra-ui/react"
+import { authFetch } from "../../login/AuthFetch"
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -102,7 +103,7 @@ function Comprar(){
                                 <NumberInputRoot width="50px" value={item} onIncrement={handleIncrementCompra} onDecrement={handleDecrementCompra} marginLeft="2rem" min={0} max={quantidade}>
                                     <NumberInputField marginLeft="-7" value={item} readOnly />
                                 </NumberInputRoot>
-                                <Button type="submit" variant="solid" borderRadius={8} padding={2} backgroundColor="#191970">Buy now</Button>
+                                <Button type="submit" variant="solid" borderRadius={8} padding={2} backgroundColor="#191970">Comprar</Button>
                             </form>
                         </div>
                     </div>
