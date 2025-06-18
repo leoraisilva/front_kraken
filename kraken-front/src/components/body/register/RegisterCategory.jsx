@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { authFetch } from '../../login/AuthFetch'
 import { useNavigate } from 'react-router-dom';
 import "../body.css";
 
@@ -18,20 +19,23 @@ function RegisterCategory() {
         formData.append('descricao', descricao);
 
         try {
+            const token = localStorage.getItem('token');
+            if (!token) throw new Error('Token JWT não encontrado');
+
             const response = await fetch(`http://localhost:8083/categoria`, {
                 method: 'POST',
-                body: formData, 
+                headers: {
+                    'Authorization': `Bearer ${token}` 
+                },
+                body: formData
             });
 
-            if (!response.ok) {
-                throw new Error(`Erro na requisição ${response.status}`);
-            }
+            if (!response.ok) throw new Error(`Erro na requisição ${response.status}`);
 
             const result = await response.json();
-            console.log('Categoria cadastrada com sucesso:', result);
-            navigate('/kraken/'); 
+            navigate('/kraken/');
         } catch (error) {
-            setError('Erro no cadastro da Categoria');
+            setError('Erro no cadastro');
             console.error(error);
         }
     };
