@@ -1,4 +1,3 @@
-import Accordion from "../body/menu/Accordion";
 import Carousel from "../body/menu/Carousel";
 import Catalog from "../body/menu/Catalog";
 import image1 from "/carousel/promocao.png";
@@ -10,7 +9,6 @@ function Menu() {
         <>
             <Carousel image1={image1} image2={image2} image3={image3} />
             <Catalog />
-            <Accordion />
         </>
     )
 }

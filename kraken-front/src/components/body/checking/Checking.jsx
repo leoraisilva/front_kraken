@@ -92,45 +92,61 @@ function Checking() {
     };
 
     const handleSubmitOrder = async (evo) => {
-    evo.preventDefault();
-    const order = {
-        statusPedido: 'aguardando',
-        valorTotalPedido: valor,
-        itens: listaOrder
-    }
+        evo.preventDefault();
+        const order = {
+            statusPedido: 'aguardando',
+            valorTotalPedido: valor,
+            itens: listaOrder
+        }
 
-    try {
-        const result = await authFetch(`http://localhost:8084/pedido`, {
-            method: 'POST',
-            body: JSON.stringify(order)
-        });
-
-        const pedidoId = result.idPedido;
-
-        const updateItemsPromises = listaOrder.map(async (itemId) => {
-            const item = produto.find((obj) => obj.idItem === itemId);
-            if (!item) throw new Error(`Item com ID ${itemId} não encontrado`);
-
-            const itemFormat = {
-                quantidadeIten: item.quantidadeIten,
-                statusItem: 'alocado',
-                valorItem: item.prodValor.valorUnitario,
-                produto: item.prodValor.produtoId
-            };
-
-            await authFetch(`http://localhost:8085/itens/${item.idItem}`, {
-                method: 'PUT',
-                body: JSON.stringify(itemFormat)
+        try {
+            const result = await authFetch(`http://localhost:8084/pedido`, {
+                method: 'POST',
+                body: JSON.stringify(order)
             });
-        });
 
-        await Promise.all(updateItemsPromises);
-        navigate(`/kraken/order/${pedidoId}`);
+            const pedidoId = result.idPedido;
 
-    } catch (error) {
-        console.log("Erro no cadastro do pedido ou atualização dos itens", error);
-        setError(error);
-    }
+            const updateItemsPromises = listaOrder.map(async (itemId) => {
+                const item = produto.find((obj) => obj.idItem === itemId);
+                if (!item) throw new Error(`Item com ID ${itemId} não encontrado`);
+
+                const itemFormat = {
+                    quantidadeIten: item.quantidadeIten,
+                    statusItem: 'alocado',
+                    valorItem: item.prodValor.valorUnitario,
+                    produto: item.prodValor.produtoId
+                };
+
+                await authFetch(`http://localhost:8085/itens/${item.idItem}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(itemFormat)
+                });
+
+                const productAlterado = {
+                    nomeProduto :item.prodValor.nomeProduto,
+                    descricao: item.prodValor.descricao,
+                    valorUnitario: item.prodValor.valorUnitario,
+                    categoriaId: item.prodValor.categoriaId,
+                    estoqueId: item.prodValor.estoqueId,
+                    quantidadeProduto: (item.prodValor.quantidadeProduto - item.quantidadeIten),
+                    image: item.prodValor.image
+                }
+                console.log(productAlterado);
+                
+                await authFetch(`http://localhost:8081/produto/${item.prodValor.produtoId}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(productAlterado)
+                });
+            });
+
+            await Promise.all(updateItemsPromises);
+            navigate(`/kraken/order/${pedidoId}`);
+
+        } catch (error) {
+            console.log("Erro no cadastro do pedido ou atualização dos itens", error);
+            setError(error);
+        }
 
     };
     
