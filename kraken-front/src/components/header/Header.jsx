@@ -1,10 +1,17 @@
 import { useState, useEffect } from "react";
 import "./header.css"
+import { authFetch } from "../login/AuthFetch";
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+
 
 function Header() {
     const id_cliente = localStorage.getItem('userId');
     const [cliente, setCliente] = useState({});
+    const [nome, setNome] = useState('');
+    const [produto, setProduto] = useState('');
+    const [Error, setError] = useState('');
+    const navigate = useNavigate();
     
 
     useEffect(() => {
@@ -42,6 +49,27 @@ function Header() {
             }
         }, [id_cliente]);
 
+    const handleSearchProduct = async (nome) => {
+        try {
+            const data = await authFetch('http://localhost:8081/produto', {
+                method: 'GET',
+                mode: 'cors',
+            });
+            
+            const produtoEncontrado = data.find((obj) => obj.nomeProduto === nome);
+
+            if (produtoEncontrado) {
+                const produtoId = produtoEncontrado.produtoId; 
+                navigate(`/kraken/produto/${produtoId}`);
+            } else {
+                setError("Produto não encontrado");
+            }
+        } catch (error) {
+            console.error("Erro ao carregar os dados", error);
+            setError("Erro no carregamento, tente novamente mais tarde");
+        }
+    };
+
     return (
         <>
             <nav className=" container-header navbar navbar-expand-lg bg-body-tertiary ">
@@ -71,9 +99,13 @@ function Header() {
                         <Link to="/" className="nav-link">Sair</Link>
                     </li>
                 </ul>
-                <form className="d-flex" role="search">
-                    <input className="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" />
-                    <button className="btn btn-outline-success" type="submit">Buscar</button>
+                <form className="d-flex" role="search" onSubmit={(e) => {
+                    e.preventDefault(); 
+                    handleSearchProduct(nome); 
+                }}
+                >
+                    <input className="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" value={nome} onChange={(e) => setNome(e.target.value)} />
+                    <button className="btn btn-outline-success" type="submit" >Buscar</button>
                 </form>
                 </div>
             </div>

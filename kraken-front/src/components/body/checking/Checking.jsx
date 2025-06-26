@@ -129,6 +129,7 @@ function Checking() {
                     valorUnitario: item.prodValor.valorUnitario,
                     categoriaId: item.prodValor.categoriaId,
                     estoqueId: item.prodValor.estoqueId,
+                    clienteId: item.prodValor.clienteId,
                     quantidadeProduto: (item.prodValor.quantidadeProduto - item.quantidadeIten),
                     image: item.prodValor.image
                 }

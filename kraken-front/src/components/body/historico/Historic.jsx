@@ -61,6 +61,61 @@ function Historic () {
     fetchData();
 }, []);
 
+    const handleOrderUpdate = async (idPedido, newStatus) => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                throw new Error('Token JWT não encontrado');
+            }
+
+            const result = await fetch(`http://localhost:8084/pedido/${idPedido}`, {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if(!result.ok){
+                throw new Error('Erro carregar dados do Pedido');
+            }
+
+            const value = await result.json();
+            console.log('Dados recebidos do pedido:', value);
+
+            value.statusPedido =  newStatus;
+
+            try {
+                const response = await fetch(`http://localhost:8084/pedido/${idPedido}`, {
+                    method: 'PUT',
+                    mode: 'cors',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(value),
+                });
+
+                if(!response.ok){
+                    throw new Error('Erro na atualização');
+                }
+                
+                window.location.reload(); 
+
+            } catch (error) {
+                console.error('Erro ao acessar os dados atualizados', error);
+                setError(error);
+            }
+
+        } catch (error) {
+            console.error('Erro ao acessar os dados', error);
+            setError(error);
+        }
+    }
+
+    
+
     return (
         <>
             <div className='container-historic'>
@@ -71,6 +126,8 @@ function Historic () {
                         <div className="g-col-3">
                             <p className="d-inline-flex gap-1">
                                 <button className="btn btn-primary" type="button" onClick={() => toggleCollapse(index)} >Itens</button>
+                                <button type="button" class="btn btn-primary" onClick={() => handleOrderUpdate(item.idPedido, 'concluido')} disabled={item.statusPedido === 'cancelado'} >Concluir</button>
+                                <button type="button" class="btn btn-danger" onClick={() => handleOrderUpdate(item.idPedido, 'cancelado')} disabled={item.statusPedido === 'concluido'}  >Cancelar</button>
                             </p>
                         </div>
                         <div className="g-col-3">Valor da Compra: R$ {item.valorTotalPedido.toFixed(2)}</div>

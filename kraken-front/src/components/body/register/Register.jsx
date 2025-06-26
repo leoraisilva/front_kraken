@@ -7,6 +7,7 @@ function Register () {
     const [categ, setCateg] = useState([]);
     const [error, setError] = useState('');
     const [store, setStore] = useState([]);
+    const id_cliente = localStorage.getItem('userId');
     const navigate = useNavigate();
     const [nomeProduto, setNomeProduto] = useState('');
     const [descricao, setDescricao] = useState('');
@@ -58,6 +59,7 @@ function Register () {
         formData.append('valorUnitario', valorUnitario);
         formData.append('categoriaId', categoriaId);
         formData.append('estoqueId', estoqueid);
+        formData.append('clienteId', id_cliente);
         formData.append('quantidadeProduto', quantidadeProduto);
         formData.append('image', image);
 
@@ -133,7 +135,7 @@ function Register () {
                     <p><Link to="/kraken/store" className="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Registrar Estoque</Link></p>
                 </div>
                 <div className="col-12">
-                    <button type="submit" className="btn btn-primary">Sign in</button>
+                    <button type="submit" className="btn btn-primary">Cadastrar</button>
                 </div>
             </form>
         </div>
